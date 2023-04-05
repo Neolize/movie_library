@@ -1,0 +1,481 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-06 08:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\account\account_inactive.html:5
+#: .\templates\account\account_inactive.html:8
+msgid "Account Inactive"
+msgstr ""
+
+#: .\templates\account\account_inactive.html:10
+msgid "This account is inactive."
+msgstr ""
+
+#: .\templates\account\email.html:5 .\templates\account\email.html:8
+msgid "E-mail Addresses"
+msgstr ""
+
+#: .\templates\account\email.html:10
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: .\templates\account\email.html:24
+msgid "Verified"
+msgstr ""
+
+#: .\templates\account\email.html:26
+msgid "Unverified"
+msgstr ""
+
+#: .\templates\account\email.html:28
+msgid "Primary"
+msgstr ""
+
+#: .\templates\account\email.html:34
+msgid "Make Primary"
+msgstr ""
+
+#: .\templates\account\email.html:35
+msgid "Re-send Verification"
+msgstr ""
+
+#: .\templates\account\email.html:36
+#: .\templates\socialaccount\connections.html:35
+msgid "Remove"
+msgstr ""
+
+#: .\templates\account\email.html:43
+msgid "Warning:"
+msgstr ""
+
+#: .\templates\account\email.html:43
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: .\templates\account\email.html:48
+msgid "Add E-mail Address"
+msgstr ""
+
+#: .\templates\account\email.html:53
+msgid "Add E-mail"
+msgstr ""
+
+#: .\templates\account\email.html:63
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: .\templates\account\email_confirm.html:6
+#: .\templates\account\email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: .\templates\account\email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: .\templates\account\email_confirm.html:20
+msgid "Confirm"
+msgstr ""
+
+#: .\templates\account\email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: .\templates\account\login.html:8
+msgid "Sign In"
+msgstr "Зарегистрироваться"
+
+#: .\templates\account\login.html:13
+msgid "Вход"
+msgstr "Enter"
+
+#: .\templates\account\login.html:26 .\templates\account\signup.html:22
+msgid "Имя пользователя"
+msgstr "Username"
+
+#: .\templates\account\login.html:37 .\templates\account\signup.html:44
+msgid "Пароль"
+msgstr "Password"
+
+#: .\templates\account\login.html:49
+msgid "Remember Me"
+msgstr ""
+
+#: .\templates\account\login.html:56 .\templates\account\signup.html:93
+msgid "Войти"
+msgstr "Log in"
+
+#: .\templates\account\login.html:62
+msgid "Авторизация через социальные сети"
+msgstr "Log in with social networks"
+
+#: .\templates\account\login.html:70
+#: .\templates\account\password_change.html:14
+msgid "Forgot Password?"
+msgstr ""
+
+#: .\templates\account\logout.html:5 .\templates\account\logout.html:9
+#: .\templates\account\logout.html:21
+msgid "Sign Out"
+msgstr ""
+
+#: .\templates\account\logout.html:12
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: .\templates\account\password_change.html:5
+#: .\templates\account\password_change.html:8
+#: .\templates\account\password_change.html:13
+#: .\templates\account\password_reset_from_key.html:4
+#: .\templates\account\password_reset_from_key.html:7
+#: .\templates\account\password_reset_from_key_done.html:4
+#: .\templates\account\password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr ""
+
+#: .\templates\account\password_reset.html:6
+#: .\templates\account\password_reset.html:11
+#: .\templates\account\password_reset_done.html:6
+#: .\templates\account\password_reset_done.html:9
+msgid "Password Reset"
+msgstr ""
+
+#: .\templates\account\password_reset.html:18
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: .\templates\account\password_reset.html:42
+msgid "Reset My Password"
+msgstr ""
+
+#: .\templates\account\password_reset.html:47
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: .\templates\account\password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. If you have not received it please check your "
+"spam folder. Otherwise contact us if you do not receive it in a few minutes."
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:7
+msgid "Bad Token"
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:11
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:16
+msgid "change password"
+msgstr "Изменить пароль"
+
+#: .\templates\account\password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr ""
+
+#: .\templates\account\password_set.html:5
+#: .\templates\account\password_set.html:8
+#: .\templates\account\password_set.html:13
+msgid "Set Password"
+msgstr ""
+
+#: .\templates\account\signup.html:5 .\templates\socialaccount\signup.html:5
+msgid "Signup"
+msgstr ""
+
+#: .\templates\account\signup.html:9
+msgid "Регистрация"
+msgstr "Registration"
+
+#: .\templates\account\signup.html:66
+msgid "Пароль (ещё раз)"
+msgstr "Password (again)"
+
+#: .\templates\account\signup.html:82
+msgid "Сгенерировать пароль"
+msgstr "Generate password"
+
+#: .\templates\account\signup.html:87
+msgid "Зарегистрироваться"
+msgstr "Sign up"
+
+#: .\templates\account\signup.html:93
+msgid "Уже зарегистрированы?"
+msgstr "Have you registered?"
+
+#: .\templates\account\signup_closed.html:5
+#: .\templates\account\signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr ""
+
+#: .\templates\account\signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: .\templates\account\snippets\already_logged_in.html:5
+msgid "Note"
+msgstr ""
+
+#: .\templates\account\snippets\already_logged_in.html:5
+#, python-format
+msgid "you are already logged in as %(user_display)s."
+msgstr ""
+
+#: .\templates\account\verification_sent.html:5
+#: .\templates\account\verification_sent.html:8
+#: .\templates\account\verified_email_required.html:5
+#: .\templates\account\verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: .\templates\account\verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. If you do not see the verification e-mail in "
+"your main inbox, check your spam folder. Please contact us if you do not "
+"receive the verification e-mail within a few minutes."
+msgstr ""
+
+#: .\templates\account\verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: .\templates\account\verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside that e-mail. If you do not see "
+"the verification e-mail in your main inbox, check your spam folder. "
+"Otherwise\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: .\templates\account\verified_email_required.html:20
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: .\templates\include\rating_movies\footer.html:96
+msgid "Выберите свой язык"
+msgstr "Select your language"
+
+#: .\templates\rating_movies\detail\movie_detail.html:31
+msgid "Год"
+msgstr "Year"
+
+#: .\templates\rating_movies\detail\movie_detail.html:34
+msgid "Страна"
+msgstr "Country"
+
+#: .\templates\rating_movies\detail\movie_detail.html:38
+msgid "Слоган"
+msgstr "Tagline"
+
+#: .\templates\rating_movies\detail\movie_detail.html:42
+msgid "Режиссер"
+msgstr "Director"
+
+#: .\templates\rating_movies\detail\movie_detail.html:52
+msgid "Актеры"
+msgstr "Actors"
+
+#: .\templates\rating_movies\detail\movie_detail.html:64
+msgid "Жанр"
+msgstr "Genre"
+
+#: .\templates\rating_movies\detail\movie_detail.html:76
+msgid "Премьера в мире"
+msgstr "World premiere"
+
+#: .\templates\rating_movies\detail\movie_detail.html:81
+msgid "Бюджет за серию"
+msgstr "Budget per episode"
+
+#: .\templates\rating_movies\detail\movie_detail.html:83
+msgid "Сборы в США за один сезон"
+msgstr "Fees in USA for one season"
+
+#: .\templates\rating_movies\detail\movie_detail.html:85
+msgid "Сборы в мире за один сезон"
+msgstr "Fees in world for one season"
+
+#: .\templates\rating_movies\detail\movie_detail.html:89
+msgid "Бюджет"
+msgstr "Budget"
+
+#: .\templates\rating_movies\detail\movie_detail.html:91
+msgid "Сборы в США"
+msgstr "Fees in USA"
+
+#: .\templates\rating_movies\detail\movie_detail.html:92
+msgid "Сборы в мире"
+msgstr "Fees in world"
+
+#: .\templates\rating_movies\detail\movie_detail.html:99
+msgid "Рейтинг"
+msgstr "Rating"
+
+#: .\templates\rating_movies\detail\movie_detail.html:152
+msgid "Редактировать"
+msgstr "Edit"
+
+#: .\templates\rating_movies\detail\movie_detail.html:168
+msgid "О фильме"
+msgstr "About the movie"
+
+#: .\templates\rating_movies\detail\movie_detail.html:186
+msgid "Оставить отзыв"
+msgstr "Leave a review"
+
+#: .\templates\rating_movies\detail\movie_detail.html:193
+msgid "Ваш комментарий"
+msgstr "Your comment"
+
+#: .\templates\rating_movies\detail\movie_detail.html:200
+msgid "Имя"
+msgstr "Name"
+
+#: .\templates\rating_movies\detail\movie_detail.html:214
+msgid "Отправить"
+msgstr "Send"
+
+#: .\templates\socialaccount\authentication_error.html:5
+#: .\templates\socialaccount\authentication_error.html:8
+msgid "Social Network Login Failure"
+msgstr ""
+
+#: .\templates\socialaccount\authentication_error.html:10
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr ""
+
+#: .\templates\socialaccount\connections.html:5
+#: .\templates\socialaccount\connections.html:8
+msgid "Account Connections"
+msgstr ""
+
+#: .\templates\socialaccount\connections.html:11
+msgid ""
+"You can sign in to your account using any of the following third party "
+"accounts:"
+msgstr ""
+
+#: .\templates\socialaccount\connections.html:43
+msgid ""
+"You currently have no social network accounts connected to this account."
+msgstr ""
+
+#: .\templates\socialaccount\connections.html:46
+msgid "Add a 3rd Party Account"
+msgstr ""
+
+#: .\templates\socialaccount\login.html:4
+msgid "Войти с помощью учётной записи"
+msgstr "Sign in using a social account"
+
+#: .\templates\socialaccount\login.html:11
+msgid "Подключить"
+msgstr "Connect"
+
+#: .\templates\socialaccount\login.html:13
+msgid "Подключить учётную запись из"
+msgstr "You are about to connect a new third party from"
+
+#: .\templates\socialaccount\login.html:15
+msgid "Войти в систему через"
+msgstr "Sign in via"
+
+#: .\templates\socialaccount\login.html:17
+msgid "Войти в систему с помощью учётной записи из"
+msgstr "You are about to sign in using a third party account from"
+
+#: .\templates\socialaccount\login.html:22
+msgid "Продолжить"
+msgstr "Continue"
+
+#: .\templates\socialaccount\login_cancelled.html:5
+#: .\templates\socialaccount\login_cancelled.html:9
+msgid "Login Cancelled"
+msgstr ""
+
+#: .\templates\socialaccount\login_cancelled.html:13
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr ""
+
+#: .\templates\socialaccount\signup.html:8
+#: .\templates\socialaccount\signup.html:19
+msgid "Sign Up"
+msgstr "Зарегистрироваться"
+
+#: .\templates\socialaccount\signup.html:10
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"%(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#~ msgid "Добро пожаловать,"
+#~ msgstr "Welcome"
+
+#~ msgid "Sign in via"
+#~ msgstr "Зарегистрироваться"
+
+#~ msgid "Второй случай"
+#~ msgstr "Second case"
+
+#~ msgid "Continue"
+#~ msgstr "Продолжить"
+
+#~ msgid "Вы собираетесь подключить сторонний аккаунт из"
+#~ msgstr "You are about to connect a new third party from"
+
+#~ msgid "Вы собираетесь войти, используя сторонний аккаунт из"
+#~ msgstr "You are about to sign in using a third party account from"
+
+#~ msgid "Запомнить меня"
+#~ msgstr "Remember Me"
+
+#~ msgid "Забыли пароль?"
+#~ msgstr "Forgot Password?"
+
+#~ msgid "Применить"
+#~ msgstr "Apply"

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Currency {% endblock title %}
+
+{% block content %}
+    <div class="back_link_block">
+            <a href="{{ back_link }}" class="btn btn-link">&larr; Back</a>
+    </div>
+
+    <div class="currency">
+        <div class="currency_block">
+
+            {% if currency_data.error_message %}
+                <div class="alert alert-danger mb-5" style="width: 650px; margin: auto;">{{ currency_data.error_message }}</div>
+            {% endif %}
+
+            <form action="{% url 'currency' %}" method="post" class="currency_date" id="date_form">
+                {% csrf_token %}
+
+                <div class="d-sm-flex">
+                    <div class="col-sm-6 form-group p-0 editContent" style="position: relative;">
+                        <input type="date" id="id_calendar" class="form-control custom_mask currency_calendar"
+                               name="date" max="{{ max_date }}" hidden>
+                        <input type="text" id="id_calendar_text" class="form-control custom_mask currency_calendar"
+                                value="{{ date_value }}" style="font-size: 21px; padding-left: 29px;">
+                    </div>
+                </div>
+            </form>
+
+            {% if currency_data.currencies_list %}
+                <table class="currency_table">
+                    <tr class="currency_table__title">
+                        <th class="currency_table__column">
+                            <span>Цифровой код</span>
+                        </th>
+                        <th class="currency_table__column">
+                            <span>Буквенный код</span>
+                        </th>
+                        <th class="currency_table__column">
+                            <span>Единиц</span>
+                        </th>
+                        <th class="currency_table__column-name">
+                            <span>Валюта</span>
+                        </th>
+                        <th class="currency_table__column">
+                            <span>Курс</span>
+                        </th>
+                        <th class="currency_table__column">
+                            <span>Предыдущий курс</span>
+                        </th>
+                    </tr>
+
+                    {% for currency in currency_data.currencies_list %}
+                        <tr class="currency_table__row">
+                            <td class="currency_table__column">
+                                {{ currency.NumCode }}
+                            </td>
+                            <td class="currency_table__column">
+                                {{ currency.CharCode }}
+                            </td>
+                            <td class="currency_table__column">
+                                {{ currency.Nominal }}
+                            </td>
+                            <td class="currency_table__column">
+                                {{ currency.Name }}
+                            </td>
+                            <td class="currency_table__column">
+                                {{ currency.Value }}
+                            </td>
+                            <td class="currency_table__column">
+                                {{ currency.Previous }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'rating_movies/js/api/currency.js' %}"></script>
+{% endblock script %}

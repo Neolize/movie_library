@@ -1,0 +1,67 @@
+{% extends 'rating_movies/add/add_genre.html' %}
+
+{% block title %} Add movie shot {% endblock title %}
+
+{% block content %}
+<div class="add_form">
+    <h3 class="title_add_form editContent" style="outline: none; cursor: inherit; margin-bottom: 50px;">
+                        <span class="sub-tittle editContent"
+                              style="outline: none; cursor: inherit;"></span>Добавить кадр из фильма</h3>
+    <form action="{% url 'add_movie_shots' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" style="margin-bottom: 25px;">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="d-sm-flex">
+            <div class="col-sm-6 form-group p-0 editContent">
+                <label for="{{ form.title.id_for_label }}" class="editContent">{{ form.title.label }} * </label>
+                {{ form.title }}
+
+                {% if form.title.errors %}
+                    <div class="alert alert-danger mt-3">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+         <div class="form-group editContent">
+                <label for="{{ form.description.id_for_label }}" class="editContent">
+                       {{ form.description.label }} *
+                </label>
+                {{ form.description }}
+
+                 {% if form.description.errors %}
+                    <div class="alert alert-danger mt-3">{{ form.description.errors }}</div>
+                 {% endif %}
+         </div>
+
+        <div class="d-sm-flex">
+            <div class="col-sm-6 form-group p-0 editContent">
+                <label for="{{ form.movie.id_for_label }}" class="editContent">{{ form.movie.label }} * </label>
+                {{ form.movie }}
+
+                {% if form.movie.errors %}
+                    <div class="alert alert-danger mt-3">{{ form.movie.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group editContent">
+            <label for="{{ form.image.id_for_label }}" class="editContent">
+                {{ form.image.label }} *
+            </label>
+            {{ form.image }}
+
+            {% if form.image.errors %}
+                <div class="alert alert-danger mt-3">{{ form.image.errors }}</div>
+            {% endif %}
+
+        </div>
+
+        <button type="submit" class="mt-4 btn btn-success btn-block py-3" style="margin-bottom: 50px;">
+            Добавить
+        </button>
+    </form>
+</div>
+{% endblock content %}

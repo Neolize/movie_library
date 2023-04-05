@@ -1,0 +1,18 @@
+{% extends 'rating_movies/base.html' %}
+
+{% block title %} All categories {% endblock title %}
+
+{% block class_header %} bg1 {% endblock class_header %}
+
+
+{% block object %}
+
+<div class="objects_list">
+    <ul>
+        {% for category in categories %}
+        <li style="list-style-type: none;"><a href="{{ category.get_absolute_url }}"><h3>{{ category.name }}</h3></a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock object %}

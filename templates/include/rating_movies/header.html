@@ -1,0 +1,117 @@
+{% load movie_tags %}
+{% load i18n %}
+
+<header class="header">
+    <div class="container-fluid px-lg-5">
+        <!-- nav -->
+        <nav class="py-4">
+            <div id="logo">
+                <h1> <a href="{% url 'home' %}" class="editContent" style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;">Film Library</a></h1>
+            </div>
+
+            <label for="drop" class="toggle">Menu</label>
+            <input type="checkbox" id="drop">
+            <ul class="menu mt-2" id="menu">
+
+                <li id="main_option"><a href="{% url 'home' %}">Главная</a></li>
+                <li><a href="#menu_popup" id="menu_popup-link">Menu</a></li>
+                <li>
+                    <!-- First Tier Drop Down -->
+                    <label for="drop-2" class="toggle">Категории <span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
+                    <a href="#">Категории <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                    <input type="checkbox" id="drop-2">
+                    <ul>
+                        {% get_categories as categories %}
+                        {% for category in categories %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li>
+                    <!-- Second Tier Drop Down -->
+                    <label for="drop-3" class="toggle">Добавить<span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
+                    <a href="#">Добавить <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                    <input type="checkbox" id="drop-3">
+                    <ul>
+                        <li><a href="{% url 'add_category' %}">Категорию</a></li>
+                        <li><a href="{% url 'add_genre' %}">Жанр</a></li>
+                        <li><a href="{% url 'add_actor_director' %}">Актера/Режисёра</a></li>
+                        <li><a href="{% url 'add_movie' %}">Фильм</a></li>
+                        <li><a href="{% url 'add_movie_shots' %}">Кадры из фильма</a></li>
+                        <li><a href="{% url 'add_rating_star' %}">Звезду рейтинга</a></li>
+                    </ul>
+                </li>
+
+
+                {% if user.is_authenticated %}
+                    <li class="user_profile_header">
+                        <!-- Second Tier Drop Down -->
+                        {% if user.username|slice:"2" == "id" %}
+                            <label for="drop-3" class="toggle">{{ user.first_name }}<span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
+                            <a href="#">{{ user.first_name }} <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                        {% else %}
+                            <label for="drop-3" class="toggle">{{ user.username }}<span class="fa fa-angle-down" aria-hidden="true" ></span> </label>
+                            <a href="#">{{ user.username }} <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                        {% endif %}
+                        <input type="checkbox" id="drop-4">
+                        <ul class="user_profile_header__options">
+                            {% if user.is_staff %}
+                                 <li><a href="/admin/">Админка</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'user_profile' %}">Профиль</a></li>
+                            <li><a href="{% url 'logout' %}">Выход</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'login' %}" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">&#10148; Вход</a>
+                        <a href="{% url 'signup' %}" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">&#10010; Регистрация</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- //nav -->
+    </div>
+
+<!-- popup -->
+    <div id="menu_popup" class="menu_popup">
+        <div class="menu_popup__body">
+            <div class="menu_popup__content">
+                <a href="#popup__target" class="menu_popup__close close-menu_popup"></a>
+                <div class="menu_popup__title"><a href="{% url 'home' %}" class="menu_popup__title-link">Главная</a></div>
+                <div class="menu_popup__text">
+
+                    <div class="menu_popup__api_block">
+                        <div class="menu_popup__subtitle">API</div>
+                        <div class="menu_popup__api_block-list">
+                            <ul>
+                                <li class="menu_popup__list-item"><a href="{% url 'weather' %}">Погода</a></li>
+                                <li class="menu_popup__list-item"><a href="{% url 'currency' %}">Валюта</a></li>
+                                <li class="menu_popup__list-item"><a href="{% url 'crypto_currency' %}">Криптовалюта</a></li>
+                                <li class="menu_popup__list-item"><a href="{% url 'random_password' %}">Случайный пароль</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="menu_popup__partition_block">
+                        <div class="menu_popup__subtitle editContent">Разделы</div>
+                        <div class="menu_popup__partition_block-list">
+                            <ul>
+                                <li class="menu_popup__list-item"><a href="{% url 'categories' %}" class="editContent">Категории</a></li>
+                                <li class="menu_popup__list-item"><a href="{% url 'actors_directors' %}" class="editContent">Актёры и режиссёры</a></li>
+                                <li class="menu_popup__list-item"><a href="{% url 'genres' %}" class="editContent">Жанры</a></li>
+                                <li class="menu_popup__list-item"><a href="#" class="editContent">Контакты</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<!--  //popup   -->
+
+</header>
+<!-- //header -->
+<!--/banner-->

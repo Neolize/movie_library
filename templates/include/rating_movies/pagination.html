@@ -1,0 +1,49 @@
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+        {% if page_obj.number|add:'-3' > 1 %}
+            <li class="pagination__item no-active">
+                <a href="?{{ q }}{{ url_years }}{{ url_genres }}page=1" class="pagination__link">
+                    1
+                </a>
+            </li>
+        {% endif %}
+        {% if page_obj.number|add:'-3' >= 3 %}
+            <li class="pagination__item pagination__item--dots">
+                <a href="?{{ q }}{{ url_years }}{{ url_genres }}page={{ page_obj.previous_page_number|add:'-3' }}">
+                    <span class="pagination__link">. . .</span>
+                </a>
+            </li>
+        {% endif %}
+    {% endif %}
+
+    {% if paginator.page_range|length > 1 %}
+        {% for page in paginator.page_range %}
+            {% if page_obj.number == page %}
+                <li class="pagination__item active">
+                    <a href="#" class="pagination__link">{{ page }}</a>
+                </li>
+            {% elif page > page_obj.number|add:'-4' and page < page_obj.number|add:'4' %}
+                <li class="pagination__item no-active">
+                    <a href="?{{ q }}{{ url_years }}{{ url_genres }}page={{ page }}" class="pagination__link">{{ page }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if page_obj.has_next %}
+        {% if page_obj.number|add:'4' < page_obj.paginator.num_pages %}
+            <li class="pagination__item pagination__item--dots">
+               <a href="?{{ q }}{{ url_years }}{{ url_genres }}page={{ page_obj.next_page_number|add:'3' }}">
+                 <span class="pagination__link">. . .</span>
+               </a>
+            </li>
+        {% endif %}
+        {% if page_obj.number|add:'3' < page_obj.paginator.num_pages %}
+            <li class="pagination__item no-active">
+                <a href="?{{ q }}{{ url_years }}{{ url_genres }}page={{ page_obj.paginator.num_pages }}" class="pagination__link">
+                  {{ page_obj.paginator.num_pages }}
+                </a>
+            </li>
+        {% endif %}
+    {% endif %}
+</ul>

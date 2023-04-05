@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+{% load recaptcha3 %}
+<html lang="ru">
+<head>
+    <!-- //Meta tag Keywords -->
+    <title>{% block title %} {% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- //Meta tag Keywords -->
+    <!-- Custom-Files -->
+    <link rel="stylesheet" href="{% static 'rating_movies/css/bootstrap.css' %}">
+    <!-- Bootstrap-Core-CSS -->
+    <!--/ Style-CSS -->
+    <link rel="stylesheet" href="{% static 'rating_movies/css/style.css' %}" type="text/css" media="all">
+    <!--// Style-CSS -->
+    <!-- font-awesome-icons -->
+    <link href="{% static 'rating_movies/css/font-awesome.css' %}" rel="stylesheet" type="text/css">
+    <!-- //font-awesome-icons -->
+  <!-- /fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+    <!-- //fonts -->
+    <!-- /logo -->
+    <link rel="shortcut icon" href="{% static 'rating_movies/images/logo/iconfinder-technologymachineelectronicdevice27-4026433_113361.ico' %}" type="image/x-icon" />
+    <!-- //logo -->
+
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+</head>
+
+<body>
+<div id="page" class="page"><!-- mian-content -->
+    <div class="main-banner bg {% block class_header %}{% endblock class_header %}" id="home">
+        {% include "include/rating_movies/header.html" %}
+    </div>
+
+    {% block content %}
+
+    {% endblock content %}
+
+    {% include "include/rating_movies/footer.html" %}
+    {% include "include/rating_movies/scroll.html" %}
+</div>
+<script src="{% static 'dist/bundle.js' %}"></script>
+<script src="{% static 'rating_movies/js/main.js' %}"></script>
+<!--<script src="http://twitter.github.io/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>-->
+{% block script %} {% endblock script %}
+</body>
+</html>
+

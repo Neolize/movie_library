@@ -1,0 +1,98 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Signup" %}{% endblock title %}
+
+{% block content %}
+    <div class="account_block">
+        <h2 class="account_title">{% trans "Регистрация" %}</h2>
+
+        <form class="signup" id="account_form" method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" style="margin-bottom: 25px;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="account_field">
+                {{ form.username }}
+                <label for="id_username" class="account_label__input">{% trans "Имя пользователя" %}</label>
+
+                {% if form.username.errors %}
+                    <div class="alert alert-danger account_signup__errors">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="account_field">
+                {{ form.email }}
+                <label for="id_user_email" class="account_label__input">Email</label>
+
+                {% if form.email.errors %}
+                    <div class="alert alert-danger account_signup__errors">
+                        {{ form.email.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="account_field">
+                {{ form.password1 }}
+                <label for="id_password1" class="account_label__input">{% trans "Пароль" %}</label>
+                <div class="account_show-password"></div>
+
+                {% if form.password1.errors %}
+                    {% if form.password1.errors|length == 2 %}
+                        <div class="alert alert-danger account_signup__errors" style="height: 165px;">
+                            {{ form.password1.errors }}
+                        </div>
+                    {% elif form.password1.errors|length == 3 %}
+                        <div class="alert alert-danger account_signup__errors" style="height: 210px;">
+                            {{ form.password1.errors }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-danger account_signup__errors">
+                            {{ form.password1.errors }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="account_field">
+                {{ form.password2 }}
+                <label for="id_password2" class="account_label__input">{% trans "Пароль (ещё раз)" %}</label>
+                <div class="account_show-password"></div>
+
+                {% if form.password2.errors %}
+                    <div class="alert alert-danger account_signup__errors">
+                        {{ form.password2.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" class="account_field" />
+            {% endif %}
+
+            <div class="account_field">
+                <p class="account_generate_password">
+                    <a href="{% url 'random_password' %}">{% trans "Сгенерировать пароль" %}</a>
+                </p>
+            </div>
+
+            <div class="account_field">
+                <button type="submit" class="primaryAction btn btn-primary account_button">{% trans "Зарегистрироваться" %}</button>
+            </div>
+        </form>
+
+        <div class="account_field">
+            <p class="account_inscription">
+                {% trans "Уже зарегистрированы?" %} <a href="{% url 'login' %}">{% trans "Войти" %}</a>
+            </p>
+        </div>
+    </div>
+
+{% endblock %}

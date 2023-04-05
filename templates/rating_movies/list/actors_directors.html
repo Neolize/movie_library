@@ -1,0 +1,26 @@
+{% extends 'rating_movies/base.html' %}
+
+{% block title %}All actors and directors{% endblock title %}
+
+{% block class_header %} bg1 {% endblock class_header %}
+
+{% block object %}
+    <div class="left-ads-display col-lg-9">
+                <div class="row">
+                    {% for actor_director in object_list %}
+                        <div class="col-md-4 product-men">
+                            <div class="product-shoe-info editContent text-center mt-lg-4" >
+                                <div class="men-thumb-item">
+                                    <img src="{{ actor_director.image.url }}" class="img-fluid" alt="{{ actor_director.name }}" >
+                                </div>
+                                <div class="item-info-product">
+                                    <h4 class="">
+                                        <a href="{{ actor_director.get_absolute_url }}" class="editContent" >{{ actor_director.name }}</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+{% endblock object %}

@@ -1,0 +1,20 @@
+<div class="deal-leftmk left-side">
+    {% if my_movies %}
+        <h3 class="sear-head editContent">Мой список</h3>
+    {% else %}
+        <h3 class="sear-head editContent">Последние добавленные фильмы</h3>
+    {% endif %}
+
+    {% for movie in last_movies %}
+        <div class="special-sec1 row mt-3 editContent">
+            <div class="img-deals col-md-4">
+                {% if movie.poster %}
+                    <img src="{{ movie.poster.url }}" class="img-fluid" alt="{{ movie.title }}">
+                {% endif %}
+            </div>
+            <div class="img-deal1 col-md-4">
+                <a href="{{ movie.get_absolute_url }}" class="editContent" ><h3 class="editContent">{{ movie.title }}</h3></a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

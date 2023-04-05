@@ -1,0 +1,85 @@
+{% extends 'rating_movies/base.html' %}
+{% load static %}
+
+{% block title %} {{ actor_director.name }} {% endblock title %}
+
+{% block container %}
+     <div class="container py-md-3">
+{% endblock container %}
+
+
+{% block sidebar %}
+         <div class="side-bar col-lg-4">
+{% endblock sidebar %}
+
+{% block object %}
+    <div class="left-ads-display col-lg-8">
+        <div class="row">
+            <div class="desc1-left col-md-6">
+                <img src="{{ actor_director.image.url }}" class="img-fluid" alt="{{ actor_director.name }}">
+            </div>
+            <div class="desc1-right col-md-6 pl-lg-4">
+                <h3 class="editContent" style="outline: none; cursor: inherit;">
+                    {{ actor_director.name }}
+                </h3>
+                <h5 class="editContent"></h5>
+                <ul>
+                    <li style="list-style: none"><span><b>Возраст:</b> {{ actor_director.age }} лет</span></li>
+                    <li style="list-style: none">
+                        <span><b>Режиссёр:</b>
+                            {% for movie in actor_director.movie_director.all %}
+                                {% if forloop.last %}
+                                    <a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a>
+                                {% else %}
+                                    <a href="{{ movie.get_absolute_url }}">{{ movie.title }},</a>
+                                {% endif %}
+                            {% empty %}
+                                Не был(а) на должности режиссёра ни в одном из имеющихся фильмов
+                            {% endfor %}
+                        </span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Актёр:</b>
+                            {% for movie in actor_director.movie_actor.all %}
+                                {% if forloop.last %}
+                                    <a href="{{ movie.get_absolute_url }}">{{ movie.title }}</a>
+                                {% else %}
+                                    <a href="{{ movie.get_absolute_url }}">{{ movie.title }},</a>
+                                {% endif %}
+                            {% empty %}
+                                Не сыграл(а) ни в одном из имеющихся фильмов
+                            {% endfor %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row sub-para-w3layouts mt-5">
+            <p class="editContent">
+                {{ actor_director.description|safe }}
+            </p>
+        </div>
+
+        {% if user.is_authenticated and user.is_staff %}
+            <div class="clearfix">
+                <div style="float: left;">
+                    <a href="{{ actor_director.get_update_url }}" class="btn btn-primary button_change_object"
+                       id="id_update_actor_director" style="margin-right: 20px;">
+                        <span class="link_change_object">Изменить</span></a>
+                </div>
+                <div style="float: left;">
+                    <form action="{{ actor_director.get_delete_url }}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="mt-5 btn btn-danger button_change_object button_float" id="id_delete_button"
+                                onclick="askUserAboutDeleting(event)">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock object %}
+</div>

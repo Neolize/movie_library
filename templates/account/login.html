@@ -1,0 +1,77 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+
+
+{% block title %}{% trans "Sign In" %}{% endblock title %}
+
+{% block content %}
+
+      <div class="account_block">
+          <h2 class="account_title">{% trans "Вход" %}</h2>
+
+          <form class="login" method="post" id="account_form">
+              {% csrf_token %}
+
+              {% if form.non_field_errors %}
+                  <div class="alert alert-danger account_errors" style="margin-bottom: 25px;">
+                     {{ form.non_field_errors }}
+                  </div>
+              {% endif %}
+
+              <div class="account_field">
+                  {{ form.login }}
+                  <label for="id_login" class="account_label__input">{% trans "Имя пользователя" %}</label>
+
+                  {% if form.login.errors %}
+                      <div class="alert alert-danger mt-3 account_login__errors">
+                          {{ form.login.errors }}
+                      </div>
+                  {% endif %}
+              </div>
+
+              <div class="account_field">
+                  {{ form.password }}
+                  <label for="id_password" class="account_label__input">{% trans "Пароль" %}</label>
+                  <div class="account_show-password"></div>
+
+                  {% if form.password.errors %}
+                      <div class="alert alert-danger mt-3 account_login__errors">
+                          {{ form.password.errors }}
+                      </div>
+                  {% endif %}
+              </div>
+
+              <div class="account_field">
+                  {{ form.remember }}
+                  <label for="id_password" class="account_label__checkbox">{% trans "Remember Me" %}</label>
+              </div>
+
+              {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" class="account_field" />
+              {% endif %}
+              <div class="account_field">
+                  <button class="primaryAction btn btn-primary account_button" type="submit">{% trans "Войти" %}</button>
+              </div>
+          </form>
+
+          <div class="socialaccount_ballot account_field" style="margin-bottom: 15px;">
+
+               <div class="account_inscription">{% trans "Авторизация через социальные сети" %}:</div>
+
+                <ul class="socialaccount_providers login-vk" style="list-style: none;">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                </ul>
+
+              <a class="button secondaryAction account_field" href="{% url 'password_reset' %}"
+                 style="font-size: 18px; margin-left: 95px;">
+                  {% trans "Forgot Password?" %}
+              </a>
+
+          </div>
+      </div>
+
+{% endblock %}
+

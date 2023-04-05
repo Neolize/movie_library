@@ -1,0 +1,132 @@
+{% load movie_tags %}
+
+<div class="search-bar w3layouts-newsletter">
+    <h3 class="sear-head editContent" >Поиск фильма</h3>
+    <form action="{% url 'search' %}" method="get" class="d-flex editContent" id="search_form" >
+        {% if entered_title %}
+            <input type="search" value="{{ entered_title }}" name="q" class="form-control" required="">
+        {% else %}
+             <input type="search" placeholder="Введите название..." name="q" class="form-control" required="">
+        {% endif %}
+        <button type="submit" class="btn1 btn" ><span class="fa fa-search" aria-hidden="true" ></span></button>
+    </form>
+</div>
+<!--preference -->
+<div id="preferences">
+    <form action="{% url 'filtering' %}" method="get" id="filter" name="filter">
+        <div class="left-side my-4">
+            <h3 class="sear-head editContent" >Жанры</h3>
+            <ul class="w3layouts-box-list">
+                {% for genre in view.get_genres %}
+                    {% if genre.movies %}
+                        <li class="editContent">
+                            {% if genre.pk in genres %}
+                                <input type="checkbox" id="filter-genre" checked name="genre" value="{{ genre.id }}">
+                            {% else %}
+                                <input type="checkbox" id="filter-genre" name="genre" value="{{ genre.id }}">
+                            {% endif %}
+                            <span class="span editContent">{{ genre.name }}</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- // preference -->
+        <!-- discounts -->
+        <div class="left-side">
+            <h3 class="sear-head editContent" >Год</h3>
+            <ul class="w3layouts-box-list">
+                {% for item in view.get_years %}
+                    <li class="editContent">
+                        {% if item.year in years %}
+                            <input type="checkbox" id="filter-year" checked name="year" value="{{ item.year }}">
+                        {% else %}
+                            <input type="checkbox" id="filter-year" name="year" value="{{ item.year }}">
+                        {% endif %}
+                        <span class="span editContent">{{ item.year }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <button class="btn btn-info" id="button-filter" hidden>Найти</button>
+    </form>
+    <!-- //discounts -->
+    <!-- reviews -->
+
+    <!-- //sorting -->
+    <div class="left-side my-4">
+        <h3 class="sear-head editContent">Сортировка</h3>
+        <form action="sorting" method="get" name="sorting-movies">
+            <ul class="w3layouts-box-list sorting-list">
+                <li data-sorting-id="sorting=1" data-sorting-order="descending">По рейтингу</li>
+                <li data-sorting-id="sorting=2" data-sorting-order="descending">По дате выхода</li>
+                <li data-sorting-id="sorting=3" data-sorting-order="descending">По алфавиту</li>
+                <li data-sorting-id="sorting=4">Случайно</li>
+                <li data-sorting-id="sorting=5" data-sorting-order="descending">По ID</li>
+            </ul>
+        </form>
+    </div>
+    <!-- sorting -->
+
+    <div class="customer-rev left-side my-4">
+        <h3 class="sear-head editContent" >Рейтинг</h3>
+        <ul class="w3layouts-box-list">
+            <li>
+                <a href="#">
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="editContent" >5.0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star-o" aria-hidden="true" ></span>
+                    <span class="editContent" >4.0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star-half-o" aria-hidden="true" ></span>
+                    <span class="fa fa-star-o" aria-hidden="true" ></span>
+                    <span class="editContent" >3.5</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star" aria-hidden="true"></span>
+                    <span class="fa fa-star-o" aria-hidden="true" ></span>
+                    <span class="fa fa-star-o" aria-hidden="true" ></span>
+                    <span class="editContent" >3.0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-star" aria-hidden="true"></span>
+                    <span class="fa fa-star" aria-hidden="true" ></span>
+                    <span class="fa fa-star-half-o" aria-hidden="true" ></span>
+                    <span class="fa fa-star-o" aria-hidden="true" ></span>
+                    <span class="fa fa-star-o" aria-hidden="true" ></span>
+                    <span class="editContent" >2.5</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--random movie -->
+<div class="random_movie">
+    <p><a href="{% url 'random_movies' %}" class="btn btn-outline-danger">Случайные фильмы</a></p>
+</div>
+<!--//random movie -->
+{% get_last_movies %}

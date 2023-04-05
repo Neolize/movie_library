@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Crypto currency {% endblock title %}
+
+{% block content %}
+    <div class="back_link_block">
+        <a href="{{ back_link }}" class="btn btn-link">&larr; Back</a>
+    </div>
+
+    <div class="crypto_currency">
+        <div class="crypto_currency_block">
+
+            {% if crypto_currency_data.error_message %}
+                <div class="alert alert-danger crypto_currency_alert">{{ crypto_currency_data.error_message }}</div>
+            {% endif %}
+
+            {% if crypto_currency_data.crypto_currencies_list %}
+                <div class="set_crypto_currency_rows">
+                    <form action="{% url 'crypto_currency' %}" method="post" id="crypto_currency_form">
+                        {% csrf_token %}
+                        {{ form.sorting }}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" style="margin-bottom: 25px;">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+                        <div class="col-sm-6 form-group p-0 editContent" style="max-width: 225px; margin-right: 49px;">
+                            <label for="{{ form.rows.id_for_label }}" class="editContent select_crypto_currency__label">
+                                {{ form.rows.label }}
+                            </label>
+                            {{ form.rows }}
+
+                            {% if form.rows.errors %}
+                                <div class="alert alert-danger mt-3">{{ form.rows.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+
+                <table class="crypto_currency_table">
+                    <tr class="crypto_currency_table__title">
+                        <th>
+                            <div class="crypto_currency_table_column__block">
+                                <span class="crypto_currency_table_column__content">№</span>
+                            </div>
+                        </th>
+                        <th class="crypto_currency_table__name_column">
+                            <div class="crypto_currency_table_column__block">
+                                <span>Name</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="crypto_currency_table_column__block">
+                                <span>Price</span>
+                            </div>
+                        </th>
+                        <th style="width: 95px;">
+                            <div class="crypto_currency_table_column__block">
+                                <span>24h %</span>
+                            </div>
+                        </th>
+                        <th style="width: 95px;">
+                            <div class="crypto_currency_table_column__block">
+                                <span>7d %</span>
+                            </div>
+                        </th>
+                        <th style="width: 102px;">
+                            <div class="crypto_currency_table_column__block">
+                                <span>30d %</span>
+                            </div>
+                        </th>
+                    </tr>
+                    {% for crypto_currency in crypto_currency_data.crypto_currencies_list %}
+                        <tr class="crypto_currency_table__row">
+                            <td>{{ crypto_currency.number }}</td>
+                            <td class="crypto_currency_table__second_column">
+                                <div class="crypto_currency_table__second_column-content">
+                                    <span class="crypto_currency__name">{{ crypto_currency.name }}</span>
+                                    <span class="crypto_currency__symbol">{{ crypto_currency.symbol }}</span>
+                                </div>
+                            </td>
+                            <td>${{ crypto_currency.price }}</td>
+
+                            {% if crypto_currency.percent_change_24h|first == "-" %}
+                                <td><div class="crypto_currency__negative">{{ crypto_currency.percent_change_24h|slice:"1:" }}%</div></td>
+                            {% else %}
+                                <td><div class="crypto_currency__positive">{{ crypto_currency.percent_change_24h }}%</div></td>
+                            {% endif %}
+
+                            {% if crypto_currency.percent_change_7d|first == "-" %}
+                                <td><div class="crypto_currency__negative">{{ crypto_currency.percent_change_7d|slice:"1:" }}%</div></td>
+                            {% else %}
+                                <td><div class="crypto_currency__positive">{{ crypto_currency.percent_change_7d }}%</div></td>
+                            {% endif %}
+
+                            {% if crypto_currency.percent_change_30d|first == "-" %}
+                                <td><div class="crypto_currency__negative">{{ crypto_currency.percent_change_30d|slice:"1:" }}%</div></td>
+                            {% else %}
+                                <td><div class="crypto_currency__positive">{{ crypto_currency.percent_change_30d }}%</div></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'rating_movies/js/api/crypto_currency.js' %}"></script>
+{% endblock script %}

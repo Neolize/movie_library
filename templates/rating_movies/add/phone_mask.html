@@ -1,0 +1,29 @@
+{% extends 'rating_movies/base.html' %}
+{% load static %}
+
+{% block title %} Phone mask {% endblock title %}
+
+{% block content %}
+<div class="add_form">
+    <h3 class="editContent custom_mask_title" style="outline: none; cursor: inherit; margin-bottom: 50px;">
+                        <span class="sub-tittle editContent"
+                              style="outline: none; cursor: inherit;"></span>Введите номер телефона</h3>
+    <form action="{% url 'phone_mask' %}" method="post">
+        {% csrf_token %}
+
+        <div class="d-sm-flex">
+            <div class="col-sm-6 form-group p-0 editContent" style="position: relative;">
+                <input type="tel" id="id_phone" class="form-control border custom_mask" maxlength="18"
+                       data-tel-input placeholder=" ">
+                <label for="id_phone" class="custom_mask_label editContent">Телефон</label>
+            </div>
+            <button type="submit" class="btn btn-success btn-block py-3 custom_button">Продолжить</button>
+        </div>
+
+    </form>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'rating_movies/js/phone_mask.js' %}"></script>
+{% endblock script %}

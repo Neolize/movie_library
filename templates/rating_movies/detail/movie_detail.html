@@ -1,0 +1,267 @@
+{% extends 'rating_movies/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %} {{ movie.title }} {% endblock title %}
+
+{% block container %}
+     <div class="container py-md-3">
+{% endblock container %}
+
+
+{% block sidebar %}
+         <div class="side-bar col-lg-4">
+{% endblock sidebar %}
+
+
+{% block object %}
+<div class="left-ads-display col-lg-8">
+        <div class="row">
+            <div class="desc1-left col-md-6">
+                {% if movie.poster %}
+                    <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
+                {% endif %}
+            </div>
+            <div class="desc1-right col-md-6 pl-lg-4">
+                <h3 class="editContent" style="outline: none; cursor: inherit;">
+                    {{ movie.title }}</h3>
+                <h5 class="editContent"></h5>
+                <ul style="list-style: none;">
+                    <li style="list-style: none">
+                        <span><b>{% trans 'Год' %}:</b> {{ movie.year }}</span></li>
+                    <li style="list-style: none">
+
+                        <span><b>{% trans 'Страна' %}:</b> {{ movie.country }}</span>
+                    </li>
+
+                    <li style="list-style: none">
+                        <span><b>{% trans 'Слоган' %}:</b> «{{ movie.tagline }}»</span>
+                    </li>
+
+                    <li style="list-style: none">
+                        <span><b>{% trans 'Режиссер' %}:</b>
+                            {% for director in movie.directors.all %}
+                                {% if forloop.last %}
+                                    <a href="{{ director.get_absolute_url }}">{{ director.name }}</a>
+                                {% else %}
+                                    <a href="{{ director.get_absolute_url }}">{{ director.name }},</a>
+                                {% endif %}
+                            {% endfor %}
+                        </span></li>
+
+                    <li style="list-style: none"><span><b>{% trans 'Актеры' %}:</b>
+                        {% for actor in movie.actors.all %}
+                            {% if forloop.last %}
+                                <a href="{{ actor.get_absolute_url }}">{{ actor.name }}</a>
+                            {% else %}
+                                <a href="{{ actor.get_absolute_url }}">{{ actor.name }},</a>
+                            {% endif %}
+                        {% endfor %}
+                        </span>
+                    </li>
+
+                    <li style="list-style: none">
+                        <span><b>{% trans 'Жанр' %}:</b>
+                            {% for genre in movie.genres.all %}
+                                {% if forloop.last %}
+                                    <a href="{{ genre.get_absolute_url }}">{{ genre.name|lower }}</a>
+                                {% else %}
+                                    <a href="{{ genre.get_absolute_url }}">{{ genre.name|lower }},</a>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                    </li>
+
+                    <li style="list-style: none">
+                        <span><b>{% trans 'Премьера в мире' %}:</b> {{ movie.world_premiere|date:"j F Y" }}</span>
+                    </li>
+
+                    {% if movie.category.url == 'serials' %}
+                        <li style="list-style: none">
+                            <span><b>{% trans 'Бюджет за серию' %}:</b> ${{ movie.budget }}</span></li>
+                        <li style="list-style: none">
+                            <span><b>{% trans 'Сборы в США за один сезон' %}:</b> ${{ movie.fees_in_usa }}</span></li>
+                        <li style="list-style: none">
+                            <span><b>{% trans 'Сборы в мире за один сезон' %}:</b> ${{ movie.fees_in_world }}</span>
+                        </li>
+                    {% else %}
+                        <li style="list-style: none">
+                            <span><b>{% trans 'Бюджет' %}:</b> ${{ movie.budget }}</span></li>
+                        <li style="list-style: none">
+                            <span><b>{% trans 'Сборы в США' %}:</b> ${{ movie.fees_in_usa }}</span></li>
+                        <li style="list-style: none"><span><b>{% trans 'Сборы в мире' %}:</b> ${{ movie.fees_in_world }}</span>
+                        </li>
+                    {% endif %}
+
+                    <li style="list-style: none;">
+                        <form action="{% url 'add_rating' %}" method="post" name="rating">
+                            {% csrf_token %}
+                            <b>{% trans 'Рейтинг' %}:</b>
+                            <input type="hidden" value="{{ movie.id }}" name="movie">
+                            <span class="rating">
+                                {% for key, value in star_form.fields.star.choices %}
+                                    {% if value == user_rating %}
+                                        <input type="radio" id="id_rating_{{ value }}" name="star" value="{{ key }}" checked>
+                                        <label for="id_rating_{{ value }}">{{ key }}</label>
+                                    {% else %}
+                                         <input type="radio" id="id_rating_{{ value }}" name="star" value="{{ key }}">
+                                         <label for="id_rating_{{ value }}">{{ key }}</label>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                            {% if average_rating %}
+                                <span class="editContent">{{ average_rating }}</span>
+                            {% endif %}
+                        </form>
+                    </li>
+                </ul>
+                    <div class="share-desc mt-3">
+                        <div class="share">
+                            <h4 class="editContent"
+                                style="outline: none; cursor: inherit;">
+                                Share:</h4>
+                            <ul class="w3layouts_social_list list-unstyled">
+                                <li>
+                                    <a href="#" class="w3pvt_facebook editContent"
+                                       style="outline: none; cursor: inherit;">
+                                    <span class="fa fa-facebook-f"
+                                          style="outline: none; cursor: inherit;"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="w3pvt_twitter editContent"
+                                       style="outline: none; cursor: inherit;">
+                                    <span class="fa fa-twitter"
+                                          style="outline: none; cursor: inherit;"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="w3pvt_dribble editContent"
+                                       style="outline: none; cursor: inherit;">
+                                    <span class="fa fa-dribbble"
+                                          style="outline: none; cursor: inherit;"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                {% if user.is_authenticated %}
+                    {% if not is_movie %}
+                        <a href="{% url 'add_to_watchlist' movie_slug=movie.url %}" class="btn btn-primary mt-5 mr-3">Add to Watchlist</a>
+                    {% else %}
+                        <a href="{% url 'user_profile' %}" class="btn btn-success mt-5 mr-3">In your Watchlist</a>
+                    {% endif %}
+                {% endif %}
+
+                {% if user.is_authenticated and user.is_staff %}
+                    <a href="{{ movie.get_update_url }}" class="btn btn-warning mt-5">{% trans 'Редактировать' %}</a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if movie_rating %}
+            <div class="movie_rating_block">
+                <span>IMDb: <span style="color: {{ movie_rating.imDb_color }}">{{ movie_rating.imDb }}</span></span>
+                <span>Metacritic: <span style="color: {{ movie_rating.metacritic_color }}">{{ movie_rating.metacritic }}</span></span>
+                <span>Rotten Tomatoes: <span style="color: {{ movie_rating.rottenTomatoes_color }}">{{ movie_rating.rottenTomatoes }}</span></span>
+            </div>
+        {% endif %}
+
+        <div class="row sub-para-w3layouts mt-5" style="width: 765px;">
+
+            <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
+                {% trans 'О фильме' %} {{ movie.title }}</h3>
+            <p>
+                {% for image in movie.movieshots_set.all %}
+                    <img src="{{ image.image.url }}" class="img-movie-shots" alt="{{ image.description }}">
+                {% endfor %}
+            </p>
+            <p class="editContent" style="outline: none; cursor: inherit;">
+                {{ movie.description|safe }}</p>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="single-form-left">
+                <!-- contact form grid -->
+                <div class="contact-single">
+                    <h3 class="editContent" style="outline: none; cursor: inherit;">
+                        <span class="sub-tittle editContent"
+                              style="outline: none; cursor: inherit; font-size: 14px;">{{ movie.review_set.count }}
+                        </span>
+                        {% trans 'Оставить отзыв' %}
+                    </h3>
+                    <form action="{% url 'add_review' pk=movie.id %}" method="post" class="mt-4" id="formReview">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent" value="" id="contactparent">
+                        <div class="form-group editContent">
+                            <label for="contactcomment" class="editContent">
+                                   {% trans 'Ваш комментарий' %} *
+                            </label>
+                            {{ review_form.text }}
+                        </div>
+                        <div class="d-sm-flex">
+                            <div class="col-sm-6 form-group p-0 editContent">
+                                <label for="contactusername" class="editContent">
+                                    {% trans 'Имя' %} *
+                                </label>
+                                {{ review_form.name }}
+                            </div>
+                            <div class="col-sm-6 form-group ml-sm-3 editContent">
+                                <label for="contactemail" class="editContent">
+                                       Email *
+                                </label>
+                                {{ review_form.email }}
+                            </div>
+                        </div>
+                        {{ review_form.recaptcha }}
+                        <button type="submit"
+                                class="mt-3 btn btn-success btn-block py-3">
+                            {% trans 'Отправить' %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+            </div>
+            {% for review in movie_reviews %}
+                <div class="media py-5">
+                    <img src="{% static 'rating_movies/images/users/unknown_user.png' %}" class="mr-3 img-fluid"
+                    style="width: 80px; height: 80px;" alt="image">
+                    <div class="media-body mt-4">
+                        <p class="editContent" style="margin-top: -25px;">
+                            {{ review.added|date:"d-m-y" }} в {{ review.added|date:"H:i" }}
+                        </p>
+                        <h5 class="mt-0 editContent">
+                            {{ review.name }}
+                        </h5>
+                        <p class="mt-2 editContent">
+                            {{ review.text }}
+                        </p>
+                        <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}', event)">Ответить</a>
+
+                        {% for child_review in review.child_reviews %}
+                            <div class="media py-5">
+                                <img src="{% static 'rating_movies/images/users/unknown_user.png' %}" class="mr-3 img-fluid"
+                                        style="width: 80px; height: 80px;" alt="image">
+                                    <div class="media-body mt-4">
+                                            <p class="editContent" style="margin-top: -25px;">
+                                                {{ child_review.added|date:"d-m-y" }} в {{ child_review.added|date:"H:i" }}
+                                            </p>
+                                            <h5 class="mt-0 editContent">
+                                                {{ child_review.name }}
+                                            </h5>
+                                            <p class="mt-2 editContent">
+                                                {{ child_review.text }}
+                                            </p>
+                                            <a href="#formReview" onclick="addReview('{{ child_review.name }}', '{{ child_review.id }}', event)">Ответить</a>
+                                    </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+</div>
+{% endblock object %}
+</div>

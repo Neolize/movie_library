@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Weather {% endblock title %}
+
+{% block content %}
+    <div class="back_link_block">
+            <a href="{{ back_link }}" class="btn btn-link">&larr; Back</a>
+    </div>
+
+    <div class="weather">
+
+        {% if weather_data.error_message %}
+            <div class="alert alert-danger" style="margin-bottom: -50px; text-align: center;">{{ weather_data.error_message }}</div>
+        {% endif %}
+
+        <div class="weather_block">
+
+            {% if weather_data.current_weather %}
+
+                <div class="weather_time_block">
+                    {{ current_datetime }}
+                </div>
+
+                <div class="weather_city_block">
+                    {{ weather_data.current_weather.city }}
+                </div>
+
+                <div class="weather_temp_block">
+                    {{ weather_data.current_weather.temp }}&#176;C
+                </div>
+
+                <div class="weather_sunrise_block">
+                    Sunrise {{ weather_data.current_weather.sunrise }}
+                </div>
+
+                <div class="weather_sunset_block">
+                    Sunset {{ weather_data.current_weather.sunset }}
+                </div>
+
+                <div class="weather_condition_block">
+                    {{ weather_data.current_weather.condition|capfirst }}
+                </div>
+
+                <div class="weather_feels_like_block">
+                    Feels like {{ weather_data.current_weather.feels_like }}&#176;C
+                </div>
+
+                <div class="weather_wind_speed_block">
+                    Wind speed {{ weather_data.current_weather.wind_speed }} m/s
+                </div>
+
+                <div class="weather_wind_gust_block">
+                    Wind gusts {{ weather_data.current_weather.wind_gust }} m/s
+                </div>
+
+                <div class="weather_humidity_block">
+                    Humidity {{ weather_data.current_weather.humidity }}%
+                </div>
+
+                <div class="weather_pressure_block">
+                    Pressure {{ weather_data.current_weather.pressure }} mm Hg
+                </div>
+
+                <div class="weather_line_block"></div>
+            {% endif %}
+
+            {% if weather_data.weather_forecast %}
+                <div class="weather_forecast_block">
+                    <div class="weather_forecast_block__line"></div>
+                    {% for weather in weather_data.weather_forecast %}
+
+                        <div class="weather_forecast_block__item">
+                            <div class="weather_forecast_block__part_name">
+                                {{ weather.part_name|capfirst }}
+                            </div>
+
+                            <div class="weather_forecast_block__temp">
+                                Temp {{ weather.temp }}&#176;C
+                            </div>
+
+                            <div class="weather_forecast_block__feels_like">
+                                Feels like {{ weather.feels_like }}&#176;C
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'rating_movies/js/api/weather.js' %}"></script>
+{% endblock script %}
