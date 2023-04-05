@@ -59,21 +59,18 @@ def do_need_update(last_updated: str, interval: int) -> bool:
     return False
 
 
-def is_dir_for_json_files(dir_name: str = None) -> bool:
-    if dir_name is None:
-        dir_name = "json_files"
+def get_folder_name_for_json_files() -> str:
+    return "json_files"
 
-    dir_path = os.path.join(BASE_DIR, "rating_movies", dir_name)
+
+def is_dir_for_json_files() -> bool:
+    dir_path = os.path.join(BASE_DIR, "rating_movies", get_folder_name_for_json_files())
     return os.path.isdir(dir_path)
 
 
-def create_dir_for_json_files(dir_name: str = None) -> None:
-    if dir_name is None:
-        dir_name = "json_files"
-
-    dir_path = os.path.join(BASE_DIR, "rating_movies", dir_name)
-    if not os.path.isdir(dir_path):
-        os.mkdir(path=dir_path)
+def create_dir_for_json_files() -> None:
+    dir_path = os.path.join(BASE_DIR, "rating_movies", get_folder_name_for_json_files())
+    os.mkdir(path=dir_path)
 
 
 @dataclass
