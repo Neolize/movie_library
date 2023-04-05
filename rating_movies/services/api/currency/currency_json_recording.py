@@ -6,7 +6,8 @@ from typing import Optional
 
 from site_engine.settings import BASE_DIR
 from rating_movies.exceptions import WriteToFileError, ReadFileError, ConversionStringError
-from rating_movies.services.api.api_utils import do_need_update, create_dir_for_json_files, is_dir_for_json_files
+from rating_movies.services.api.api_utils import do_need_update, create_dir_for_json_files, is_dir_for_json_files,\
+    get_folder_name_for_json_files
 from rating_movies.services.api.currency.currency_api import get_cbr_data, CurrencyData
 
 
@@ -48,7 +49,7 @@ def _form_full_path(file_name: str = None) -> str:
     if file_name is None:
         file_name = "cbr_data.json"
 
-    return BASE_DIR / "rating_movies/json_files" / file_name
+    return BASE_DIR / "rating_movies" / get_folder_name_for_json_files() / file_name
 
 
 def _write_currency_data(specific_date: Optional[date]) -> None:

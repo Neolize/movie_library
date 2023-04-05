@@ -5,7 +5,8 @@ from typing import Optional
 
 from site_engine.settings import BASE_DIR
 from rating_movies.exceptions import WriteToFileError, ReadFileError, ConversionStringError
-from rating_movies.services.api.api_utils import create_dir_for_json_files, do_need_update, is_dir_for_json_files
+from rating_movies.services.api.api_utils import create_dir_for_json_files, do_need_update, is_dir_for_json_files,\
+    get_folder_name_for_json_files
 from rating_movies.services.api.weather.weather_api import get_yandex_weather_data, WeatherData
 
 
@@ -70,7 +71,7 @@ def _form_full_path(file_name: str = None) -> str:
     if file_name is None:
         file_name = "yandex_weather_data.json"
 
-    return os.path.join(BASE_DIR, "rating_movies", "json_files", file_name)
+    return BASE_DIR / "rating_movies" / get_folder_name_for_json_files() / file_name
 
 
 def _write_weather_data(full_path: str) -> None:

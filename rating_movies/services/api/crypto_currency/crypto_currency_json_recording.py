@@ -3,7 +3,8 @@ import os
 import logging
 
 from site_engine.settings import BASE_DIR
-from rating_movies.services.api.api_utils import do_need_update, create_dir_for_json_files, is_dir_for_json_files
+from rating_movies.services.api.api_utils import do_need_update, create_dir_for_json_files, is_dir_for_json_files,\
+    get_folder_name_for_json_files
 from rating_movies.services.api.crypto_currency.crypto_currency_api import get_coin_market_cap_data, CryptoCurrencyData
 from rating_movies.exceptions import ReadFileError, WriteToFileError, ConversionStringError
 
@@ -46,7 +47,7 @@ def _form_full_path(file_name: str = None) -> str:
     if file_name is None:
         file_name = "coin_market_cap_data.json"
 
-    return BASE_DIR / "rating_movies" / "json_files" / file_name
+    return BASE_DIR / "rating_movies" / get_folder_name_for_json_files() / file_name
 
 
 def _write_crypto_currency_data() -> None:
