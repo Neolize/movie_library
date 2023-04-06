@@ -294,6 +294,7 @@ class AddGenreView(LoginRequiredMixin, View):
         genre_creation = create.GenreCreation(form=form)
 
         if genre_creation.create_genre():
+            delete.reset_cache("genre")
             return redirect("genres")
         return render(request, self.template, context={"form": form})
 
@@ -312,6 +313,7 @@ class AddMovieView(LoginRequiredMixin, View):
         movie_creation = create.MovieCreation(form=form)
 
         if new_movie := movie_creation.create_movie():
+            delete.reset_cache("movie")
             return redirect(new_movie.get_absolute_url())
         return render(request, self.template, context={"form": form})
 
@@ -395,7 +397,9 @@ class UpdateMovieView(LoginRequiredMixin, StaffPermissionsMixin, View):
         update_movie = update.update_movie(form=form)
 
         if update_movie:
+            delete.reset_cache("movie")
             return redirect(to=movie.get_absolute_url())
+
         data = {
             "form": form,
             "movie": movie,
@@ -431,6 +435,7 @@ class UpdateActorDirectorView(LoginRequiredMixin, StaffPermissionsMixin, View):
 
         if update_actor_director:
             return redirect(to=actor_director.get_absolute_url())
+
         data = {
             "form": form,
             "actor_director": actor_director

@@ -11,6 +11,7 @@ from rating_movies import forms
 from rating_movies.models import Actor, Movie, UserProfile
 from rating_movies.services.crud import repositories, specifications
 from rating_movies.services.utils import get_client_ip
+from rating_movies.services.crud.delete import reset_cache
 from rating_movies.services.api.movies import movies_api
 
 
@@ -283,6 +284,7 @@ def add_movie_to_user_movie_list(user: User, movie: Movie) -> None:
     """Add new movie to user's watchlist"""
     try:
         user.user_profile.movies.add(movie)
+        reset_cache("user_movie")
     except User.user_profile.RelatedObjectDoesNotExist as exc:
         LOGGER.error(exc)
         create_user_profile(user_instance=user)
