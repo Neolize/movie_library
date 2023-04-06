@@ -18,6 +18,7 @@ def delete_actor_director(actor_director: Actor) -> bool:
 
 
 def reset_cache(key: str) -> None:
+    """Reset cache after creating or updating movies, genres or user's movie list"""
     cache_keys = {
         "movie": cache_variables.CACHE_FOR_NEW_MOVIES,
         "user_movie": cache_variables.CACHE_FOR_USER_ADDED_MOVIES,
