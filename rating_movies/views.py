@@ -332,6 +332,7 @@ class AddMovieShotView(LoginRequiredMixin, View):
         movie_shot_creation = create.MovieShotCreation(form=form)
 
         if new_movie_shot := movie_shot_creation.create_movie_shot():
+            delete.reset_cache("movie")
             return redirect(new_movie_shot.movie.get_absolute_url())
         return render(request, self.template, context={"form": form})
 
