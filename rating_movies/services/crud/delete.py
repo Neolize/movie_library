@@ -27,6 +27,6 @@ def reset_cache(key: str) -> None:
     }
     if key.lower() == "movie":
         # if a new movie was created or an old movie was updated, then two keys should be deleted: movie and year
-        cache.delete_many([cache_keys.get(cache_keys.get("movie")), cache_keys.get("year")])
+        cache.delete_many([cache_keys.get("movie"), cache_keys.get("year")])
         return None
     cache.delete(cache_keys.get(key.lower(), cache_variables.CACHE_FOR_NEW_MOVIES))
