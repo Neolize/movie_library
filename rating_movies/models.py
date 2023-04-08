@@ -57,6 +57,7 @@ class Actor(models.Model):
     description = models.TextField("Описание", blank=True)
     image = models.ImageField("Изображение", upload_to="actors/%Y/%m/%d/")
     url = models.SlugField(max_length=160, unique=True, blank=True)
+    birth_date = models.DateField("Дата рождения", default=date.today)
 
     class Meta:
         db_table = "Actor"
