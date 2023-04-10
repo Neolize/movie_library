@@ -25,12 +25,12 @@
             </div>
         </div>
 
-        <div class="col-sm-2 form-group p-0 editContent">
-            <label for="{{ form.age.id_for_label }}" class="editContent">{{ form.age.label }} * </label>
-            {{ form.age }}
+        <div class="col-sm-6 form-group p-0 editContent">
+            <label for="{{ form.birth_date.id_for_label }}" class="editContent">{{ form.birth_date.label }} * </label>
+            {{ form.birth_date }}
 
-            {% if form.age.errors %}
-                <div class="alert alert-danger mt-3">{{ form.age.errors }}</div>
+            {% if form.birth_date.errors %}
+                <div class="alert alert-danger mt-3">{{ form.birth_date.errors }}</div>
             {% endif %}
         </div>
 

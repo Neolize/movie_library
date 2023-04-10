@@ -187,6 +187,7 @@ class ActorDirectorDetailView(GenreYear, DetailView):
         actor_director = read.get_actor_director_by_parameters(url=self.kwargs.get("slug"))
         if not actor_director:
             raise Http404("Such actor/director doest not exist")
+        update.update_actor_director_age(actor_director)
         return actor_director
 
 

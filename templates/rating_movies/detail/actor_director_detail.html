@@ -24,7 +24,7 @@
                 </h3>
                 <h5 class="editContent"></h5>
                 <ul>
-                    <li style="list-style: none"><span><b>Возраст:</b> {{ actor_director.age }} лет</span></li>
+                    <li style="list-style: none"><span><b>Дата рождения:</b> {{ actor_director.birth_date }} ({{ actor_director.age }} лет)</span></li>
                     <li style="list-style: none">
                         <span><b>Режиссёр:</b>
                             {% for movie in actor_director.movie_director.all %}

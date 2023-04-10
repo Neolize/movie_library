@@ -1,5 +1,6 @@
 import operator
 import logging
+import datetime
 from random import shuffle
 from typing import Union, Optional
 
@@ -110,3 +111,10 @@ class GenreYear:
             cache.set("years", years, 60)
 
         return years
+
+
+def calculate_age(birth_date: datetime.date) -> int:
+    """Return calculated age by using given birthdate"""
+    time_delta = datetime.date.today() - birth_date
+    years = int(time_delta.days / 365)
+    return years

@@ -1,6 +1,6 @@
 {% extends 'rating_movies/base.html' %}
 
-{% block title %} Редиктирование актёра/режиссёра "{{ actor_director.name }}" {% endblock title %}
+{% block title %} Редактирование актёра/режиссёра "{{ actor_director.name }}" {% endblock title %}
 
 {% block content %}
 <div class="add_form">
@@ -8,6 +8,13 @@
                         <span class="sub-tittle editContent" style="outline: none; cursor: inherit;"></span>
         Редактировать актёра/режиссёра "{{ actor_director.name }}"
     </h3>
+
+    {% if actor_director.image %}
+        <div class="men-thumb-item mb-5" style="width: 250px; height: auto;">
+            <img src="{{ actor_director.image.url }}" class="img-fluid" alt="{{ actor_director.name }}" >
+        </div>
+    {% endif %}
+
     <form action="{{ actor_director.get_update_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -26,12 +33,12 @@
             </div>
         </div>
 
-        <div class="col-sm-2 form-group p-0 editContent">
-            <label for="{{ form.age.id_for_label }}" class="editContent">{{ form.age.label }} * </label>
-            {{ form.age }}
+        <div class="col-sm-6 form-group p-0 editContent">
+            <label for="{{ form.birth_date.id_for_label }}" class="editContent">{{ form.birth_date.label }} * </label>
+            {{ form.birth_date }}
 
-            {% if form.age.errors %}
-                <div class="alert alert-danger mt-3">{{ form.age.errors }}</div>
+            {% if form.birth_date.errors %}
+                <div class="alert alert-danger mt-3">{{ form.birth_date.errors }}</div>
             {% endif %}
         </div>
 

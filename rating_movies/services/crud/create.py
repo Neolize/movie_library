@@ -9,7 +9,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from rating_movies import exceptions
 from rating_movies import forms
 from rating_movies.models import Actor, Movie, UserProfile
-from rating_movies.services.crud import repositories, specifications
+from rating_movies.services.crud import repositories, specifications, crud_utils
 from rating_movies.services.utils import get_client_ip
 from rating_movies.services.crud.delete import reset_cache
 from rating_movies.services.api.movies import movies_api
@@ -65,14 +65,15 @@ class ActorDirectorCreation(BaseCreation):
         return False
 
     def check_all_validators_for_actor_director(self) -> bool:
-        fields = ("name", "age", "description", "image")
+        fields = ("name", "birth_date", "description", "image")
         if not self.are_all_fields_in_form(fields=fields, form_cleaned_data=self.form.cleaned_data):
             self.form.add_error(None, "Mismatch filled fields")
             return False
 
-        age_field = self.form.cleaned_data["age"]
-        if not self.is_age_valid(age_field):
-            self.form.add_error("age", f"Age must be between 0 and 130, but got: {age_field}")
+        birth_date = self.form.cleaned_data["birth_date"]
+        age = crud_utils.calculate_age(birth_date)
+        if not self.is_age_valid(age):
+            self.form.add_error("birth_date", f"Age must be between 0 and 130, but got: {age}")
             return False
 
         name_field = self.form.cleaned_data["name"]

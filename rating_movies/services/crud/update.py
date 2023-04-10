@@ -1,7 +1,8 @@
 from datetime import date
 
+from rating_movies.models import Actor
 from rating_movies.forms import MovieForm, ActorDirectorForm
-from rating_movies.services.crud import repositories
+from rating_movies.services.crud import repositories, crud_utils
 from rating_movies.services.crud.create import create_other_sources_rating
 from rating_movies.services.crud.read import get_movie_by_parameters, get_other_sources_rating
 
@@ -34,3 +35,11 @@ def update_other_sources_rating(movie_cleaned_data: dict) -> None:
     if movie_object:
         if not get_other_sources_rating(movie=movie_object):
             create_other_sources_rating(title=title, movie=movie_object)
+
+
+def update_actor_director_age(actor_director: Actor) -> None:
+    """Update actor/directors age"""
+    repository = repositories.MovieRepository()
+    current_age = crud_utils.calculate_age(actor_director.birth_date)
+    actor_director.age = current_age
+    repository.update_obj(actor_director)
