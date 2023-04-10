@@ -58,6 +58,7 @@ class Actor(models.Model):
     image = models.ImageField("Изображение", upload_to="actors/%Y/%m/%d/")
     url = models.SlugField(max_length=160, unique=True, blank=True)
     birth_date = models.DateField("Дата рождения", default=date.today)
+    death_date = models.DateField("Дата смерти", blank=True, null=True)
 
     class Meta:
         db_table = "Actor"
