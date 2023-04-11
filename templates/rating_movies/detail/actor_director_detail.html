@@ -24,7 +24,12 @@
                 </h3>
                 <h5 class="editContent"></h5>
                 <ul>
-                    <li style="list-style: none"><span><b>Дата рождения:</b> {{ actor_director.birth_date }} ({{ actor_director.age }} лет)</span></li>
+                    {% if actor_director.death_date %}
+                        <li style="list-style: none"><span><b>Дата рождения:</b> {{ actor_director.birth_date }}</span></li>
+                        <li style="list-style: none"><span><b>Дата смерти:</b> {{ actor_director.death_date }} ({{ actor_director.age }} лет)</span></li>
+                    {% else %}
+                        <li style="list-style: none"><span><b>Дата рождения:</b> {{ actor_director.birth_date }} ({{ actor_director.age }} лет)</span></li>
+                    {% endif %}
                     <li style="list-style: none">
                         <span><b>Режиссёр:</b>
                             {% for movie in actor_director.movie_director.all %}

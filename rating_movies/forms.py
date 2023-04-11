@@ -29,13 +29,17 @@ class ActorDirectorForm(forms.ModelForm):
     """Форма добавления актёра/режиссёра"""
     class Meta:
         model = models.Actor
-        fields = ("name", "birth_date", "description", "image")
+        fields = ("name", "birth_date", "death_date", "description", "image")
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control border",
                                            "id": "id_name", "required": True, "name": "name"}),
             "birth_date": forms.DateInput(attrs={"class": "form-control border", "maxlength": "10",
                                                  "required": True, "placeholder": "format: \"YYYY-MM-DD\"",
                                                  "id": "id_birth_date", "name": "birth_date"},
+                                          format="%Y-%m-%d"),
+            "death_date": forms.DateInput(attrs={"class": "form-control border", "maxlength": "10",
+                                                 "placeholder": "format: \"YYYY-MM-DD\"", "id": "id_death_date",
+                                                 "name": "death_date"},
                                           format="%Y-%m-%d"),
             "description": forms.Textarea(attrs={"class": "form-control border",
                                                  "rows": 5, "id": "id_description", "required": True,

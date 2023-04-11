@@ -65,13 +65,12 @@ class ActorDirectorCreation(BaseCreation):
         return False
 
     def check_all_validators_for_actor_director(self) -> bool:
-        fields = ("name", "birth_date", "description", "image")
+        fields = ("name", "birth_date", "death_date", "description", "image")
         if not self.are_all_fields_in_form(fields=fields, form_cleaned_data=self.form.cleaned_data):
             self.form.add_error(None, "Mismatch filled fields")
             return False
 
-        birth_date = self.form.cleaned_data["birth_date"]
-        age = crud_utils.calculate_age(birth_date)
+        age = crud_utils.calculate_age(self.form.cleaned_data["birth_date"], self.form.cleaned_data["death_date"])
         if not self.is_age_valid(age):
             self.form.add_error("birth_date", f"Age must be between 0 and 130, but got: {age}")
             return False

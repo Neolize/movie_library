@@ -34,6 +34,15 @@
             {% endif %}
         </div>
 
+        <div class="col-sm-6 form-group p-0 editContent">
+            <label for="{{ form.death_date.id_for_label }}" class="editContent">{{ form.death_date.label }} * </label>
+            {{ form.death_date }}
+
+            {% if form.death_date.errors %}
+                <div class="alert alert-danger mt-3">{{ form.death_date.errors }}</div>
+            {% endif %}
+        </div>
+
          <div class="form-group editContent">
                 <label for="{{ form.description.id_for_label }}" class="editContent">
                        {{ form.description.label }} *

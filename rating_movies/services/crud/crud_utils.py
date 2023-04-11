@@ -9,7 +9,7 @@ from django.db.models import QuerySet, Count, Prefetch
 from django.core.exceptions import FieldError, FieldDoesNotExist
 
 from rating_movies import exceptions
-from rating_movies.models import Genre, Movie
+from rating_movies.models import Genre, Movie, Actor
 from rating_movies.services.crud import specifications
 
 
@@ -113,8 +113,12 @@ class GenreYear:
         return years
 
 
-def calculate_age(birth_date: datetime.date) -> int:
-    """Return calculated age by using given birthdate"""
-    time_delta = datetime.date.today() - birth_date
+def calculate_age(birth_date: datetime.date, death_date: datetime.date = None) -> int:
+    """Return calculated age by using given birthdate and/or death date."""
+    if death_date:
+        time_delta = death_date - birth_date
+    else:
+        time_delta = datetime.date.today() - birth_date
+
     years = int(time_delta.days / 365)
     return years
