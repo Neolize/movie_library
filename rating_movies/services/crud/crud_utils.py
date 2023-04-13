@@ -9,7 +9,7 @@ from django.db.models import QuerySet, Count, Prefetch
 from django.core.exceptions import FieldError, FieldDoesNotExist
 
 from rating_movies import exceptions
-from rating_movies.models import Genre, Movie, Actor
+from rating_movies.models import Genre, Movie
 from rating_movies.services.crud import specifications
 
 
