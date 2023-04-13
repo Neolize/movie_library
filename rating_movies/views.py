@@ -256,9 +256,8 @@ class AddActorDirectorView(LoginRequiredMixin, View):
 
     def post(self, request: WSGIRequest):
         form = self.form(request.POST, request.FILES)
-        actor_director_creation = create.ActorDirectorCreation(form=form)
 
-        if new_actor_director := actor_director_creation.create_actor_director():
+        if new_actor_director := create.create_actor_director(form=form):
             return redirect(new_actor_director.get_absolute_url())
         return render(request, self.template, context={"form": form})
 
@@ -274,9 +273,8 @@ class AddCategoryView(LoginRequiredMixin, View):
 
     def post(self, request: WSGIRequest):
         form = self.form(request.POST)
-        category_creation = create.CategoryCreation(form=form)
 
-        if category_creation.create_category():
+        if create.create_category(form=form):
             return redirect("categories")
         return render(request, self.template, context={"form": form})
 
@@ -292,9 +290,8 @@ class AddGenreView(LoginRequiredMixin, View):
 
     def post(self, request: WSGIRequest):
         form = self.form(request.POST)
-        genre_creation = create.GenreCreation(form=form)
 
-        if genre_creation.create_genre():
+        if create.create_genre(form=form):
             delete.reset_cache("genre")
             return redirect("genres")
         return render(request, self.template, context={"form": form})
@@ -311,9 +308,8 @@ class AddMovieView(LoginRequiredMixin, View):
 
     def post(self, request: WSGIRequest):
         form = self.form(request.POST, request.FILES)
-        movie_creation = create.MovieCreation(form=form)
 
-        if new_movie := movie_creation.create_movie():
+        if new_movie := create.create_movie(form=form):
             delete.reset_cache("movie")
             return redirect(new_movie.get_absolute_url())
         return render(request, self.template, context={"form": form})
@@ -330,9 +326,8 @@ class AddMovieShotView(LoginRequiredMixin, View):
 
     def post(self, request: WSGIRequest):
         form = self.form(request.POST, request.FILES)
-        movie_shot_creation = create.MovieShotCreation(form=form)
 
-        if new_movie_shot := movie_shot_creation.create_movie_shot():
+        if new_movie_shot := create.create_movie_shot(form=form):
             delete.reset_cache("movie")
             return redirect(new_movie_shot.movie.get_absolute_url())
         return render(request, self.template, context={"form": form})
@@ -396,9 +391,8 @@ class UpdateMovieView(LoginRequiredMixin, StaffPermissionsMixin, View):
             raise Http404("Such movie does not exist")
 
         form = self.form(request.POST, request.FILES, instance=movie)
-        update_movie = update.update_movie(form=form)
 
-        if update_movie:
+        if update.update_movie(form=form):
             delete.reset_cache("movie")
             return redirect(to=movie.get_absolute_url())
 
@@ -433,9 +427,8 @@ class UpdateActorDirectorView(LoginRequiredMixin, StaffPermissionsMixin, View):
             raise Http404("Such actor/director does not exist")
 
         form = self.form(request.POST, request.FILES, instance=actor_director)
-        update_actor_director = update.update_actor_director(form=form)
 
-        if update_actor_director:
+        if update.update_actor_director(form=form):
             return redirect(to=actor_director.get_absolute_url())
 
         data = {

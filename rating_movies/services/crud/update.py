@@ -2,26 +2,30 @@ import datetime
 
 from rating_movies.models import Actor
 from rating_movies.forms import MovieForm, ActorDirectorForm
-from rating_movies.services.crud import repositories, crud_utils
+from rating_movies.services.crud import repositories, crud_utils, custom_validators
 from rating_movies.services.crud.create import create_other_sources_rating
 from rating_movies.services.crud.read import get_movie_by_parameters, get_other_sources_rating
 
 
 def update_movie(form: MovieForm) -> bool:
     """Movie update"""
-    if form.is_valid():
-        repository = repositories.MovieRepository()
-        response = repository.update_obj(obj=form)
-        if response:
+    repository = repositories.MovieRepository()
+    movie_validator = custom_validators.MovieValidator(form=form, repository=repository)
+
+    if movie_validator.can_be_saved():
+        is_updated: bool = repository.update_obj(obj=form)
+        if is_updated:
             update_other_sources_rating(movie_cleaned_data=form.cleaned_data)
-            return response
+            return True
     return False
 
 
 def update_actor_director(form: ActorDirectorForm) -> bool:
     """Actor/director update"""
-    if form.is_valid():
-        repository = repositories.ActorDirectorRepository()
+    repository = repositories.ActorDirectorRepository()
+    actor_director_validator = custom_validators.ActorDirectorValidator(form=form, repository=repository)
+
+    if actor_director_validator.can_be_saved():
         return repository.update_obj(obj=form)
     return False
 
