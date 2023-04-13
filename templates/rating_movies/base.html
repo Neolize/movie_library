@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} {% endblock title %}
 
@@ -25,4 +26,6 @@
 </section>
 {% endblock content %}
 
-{% block script %} {% endblock script %}
+{% block script %}
+    <script src="{% static 'rating_movies/js/search.js' %}"></script>
+{% endblock script %}
