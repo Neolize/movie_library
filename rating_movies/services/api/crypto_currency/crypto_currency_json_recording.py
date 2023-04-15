@@ -82,7 +82,7 @@ def _convert_to_crypto_currency_object(read_data: dict, rows: int) -> CryptoCurr
     )
 
 
-def get_read_data(rows) -> CryptoCurrencyData:
+def get_read_data(rows: str) -> CryptoCurrencyData:
     """Возвращает объект класса CryptoCurrencyData с актуальными данными"""
     if not is_dir_for_json_files():
         create_dir_for_json_files()
