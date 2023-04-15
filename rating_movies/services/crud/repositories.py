@@ -8,7 +8,7 @@ from site_engine.settings import environ
 from rating_movies.models import Category, Actor, Genre, Movie, MovieShots, RatingStar, Rating, OtherSourcesRating
 from rating_movies.services.crud import specifications
 from rating_movies.services.crud.crud_utils import BaseObject
-from rating_movies.services.crud.decorators import base_movie_filter, base_movie_ordering
+from rating_movies.services.crud.decorators import base_movie_filter, base_movie_ordering, base_actor_director_ordering
 
 
 LOGGER = logging.getLogger("json_main_logger")
@@ -29,6 +29,16 @@ class CategoryRepository(BaseObject):
 
 class ActorDirectorRepository(BaseObject):
     model = Actor
+
+    @base_actor_director_ordering
+    def search_objects_by_name(self, name: str) -> QuerySet[Actor]:
+        """Search all actors/directors by given name"""
+        return self.model.objects.filter(name__icontains=name)
+
+    @base_actor_director_ordering
+    def search_objects_by_description(self, description: str) -> QuerySet[Actor]:
+        """Search all actors/directors by given description"""
+        return self.model.objects.filter(description__icontains=description)
 
 
 class GenreRepository(BaseObject):
