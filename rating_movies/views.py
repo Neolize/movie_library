@@ -94,12 +94,21 @@ class SearchView(GenreYear, ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        return read.search_movies(parameter=self.get_entered_parameter())
+        search_element = self.request.GET.get("search_element", "")
+
+        if search_element.lower() == "actors/directors":
+            # if user is looking for actors/directors then show actors_directors page
+            self.template_name = "rating_movies/list/actors_directors.html"
+            self.context_object_name = "object_list"
+
+        return read.fetch_sought_elements(search_element=search_element, parameter=self.get_entered_parameter())
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["q"] = f"q={self.get_entered_parameter()}&"  # формируем url для пагинации
-        context["entered_title"] = self.get_entered_parameter()
+
+        entered_parameter = self.get_entered_parameter()
+        context["q"] = f"q={entered_parameter}&"  # формируем url для пагинации
+        context["entered_title"] = entered_parameter
         return context
 
     def get_entered_parameter(self):

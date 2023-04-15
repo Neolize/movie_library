@@ -153,6 +153,24 @@ def fetch_average_movie_rating(movie_id: int) -> Optional[float]:
     return repository.fetch_average_movie_rating(movie_id=movie_id)
 
 
+def fetch_sought_elements(search_element: str, parameter: str) -> Union[QuerySet[models.Movie], QuerySet[models.Actor]]:
+    search_elements = {
+        "movies": search_movies,
+        "actors/directors": search_actors_directors,
+    }
+    return search_elements.get(search_element.lower(), search_movies)(parameter)
+
+
+def search_actors_directors(parameter: str) -> QuerySet[models.Actor]:
+    """Return actor/director list by given parameter"""
+    repository = repositories.ActorDirectorRepository()
+    actors_directors = repository.search_objects_by_name(name=parameter)
+    if not actors_directors:
+        actors_directors = repository.search_objects_by_description(description=parameter)
+
+    return actors_directors
+
+
 def search_movies(parameter: str) -> QuerySet[models.Movie]:
     """Return movie list by given parameter"""
     repository = repositories.MovieRepository()

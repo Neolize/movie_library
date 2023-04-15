@@ -1,12 +1,13 @@
 {% load movie_tags %}
 
-<div class="search-bar w3layouts-newsletter">
+<div class="search-bar w3layouts-newsletter" id="search-block">
     <h3 class="sear-head editContent" >Поиск фильма</h3>
     <form action="{% url 'search' %}" method="get" class="d-flex editContent" id="search_form" >
+        <input type="hidden" id="hidden_search_input" name="search_element" value="movies">
         {% if entered_title %}
-            <input type="search" value="{{ entered_title }}" name="q" class="form-control" required="">
+            <input type="search" value="{{ entered_title }}" name="q" class="form-control" required="" autocomplete="off" style="margin-right: 3px;">
         {% else %}
-             <input type="search" placeholder="Введите название..." name="q" class="form-control" required="">
+             <input type="search" placeholder="Введите название..." name="q" class="form-control" required="" autocomplete="off" style="margin-right: 3px;">
         {% endif %}
         <button type="submit" class="btn1 btn" ><span class="fa fa-search" aria-hidden="true" ></span></button>
     </form>
