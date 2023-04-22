@@ -65,6 +65,7 @@ class ActorDirectorValidator(BaseValidator):
         if not self.__is_age_valid(age):
             self.__form.add_error("birth_date", f"Age must be between 0 and 130, but got: {age}")
             return False
+        self.__form.cleaned_data["age"] = age
 
         if self.__creation:
             name_field = self.__form.cleaned_data["name"]
