@@ -60,6 +60,10 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "rating_movies.apps.RatingMoviesConfig",
     "mailing.apps.MailingConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -317,4 +321,17 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": BASE_DIR / "rating_movies" / "rating_movies_cache",
     }
+}
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    )
 }
