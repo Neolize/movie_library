@@ -5,7 +5,8 @@ import psycopg2
 from django.db.models import Q, QuerySet, Count
 
 from site_engine.settings import environ
-from rating_movies.models import Category, Actor, Genre, Movie, MovieShots, RatingStar, Rating, OtherSourcesRating
+from rating_movies.models import Category, Actor, Genre, Movie, MovieShots,\
+    RatingStar, Rating, OtherSourcesRating, Review
 from rating_movies.services.crud import specifications
 from rating_movies.services.crud.crud_utils import BaseObject
 from rating_movies.services.crud.decorators import base_movie_filter, base_movie_ordering, base_actor_director_ordering
@@ -202,3 +203,7 @@ class RatingRepository(BaseObject):
 
 class OtherSourcesRatingRepository(BaseObject):
     model = OtherSourcesRating
+
+
+class ReviewRepository(BaseObject):
+    model = Review

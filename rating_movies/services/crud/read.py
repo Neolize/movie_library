@@ -334,3 +334,8 @@ def is_movie_in_user_watchlist(movie: models.Movie, user: User) -> bool:
         is_movie = is_movie_in_user_watchlist(movie, user)
 
     return is_movie
+
+
+def get_all_reviews() -> QuerySet[models.Review]:
+    repository = repositories.ReviewRepository()
+    return repository.get_all_objects()
