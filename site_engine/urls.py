@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from site_engine import settings
+from site_engine.yasg import urlpatterns as yasg_urlpatterns
 from rating_movies.views import show_page_not_found
 
 
@@ -35,6 +36,8 @@ urlpatterns += i18n_patterns(
     re_path(r"^auth/", include("djoser.urls.authtoken")),
     path("api/v1/", include("api.urls")),
 )
+
+urlpatterns += yasg_urlpatterns
 
 if settings.DEBUG:
     import debug_toolbar

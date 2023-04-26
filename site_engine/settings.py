@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.vk",
     "django_filters",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
