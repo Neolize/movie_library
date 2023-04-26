@@ -4,6 +4,7 @@ from api import views
 
 
 urlpatterns = [
+    path("auth/", include("rest_framework_social_oauth2.urls")),
     path("auth/", include("djoser.urls")),
     path("session_auth/", include("rest_framework.urls")),
 
