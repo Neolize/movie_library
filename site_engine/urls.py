@@ -32,7 +32,6 @@ urlpatterns += i18n_patterns(
     path("pages/", include("django.contrib.flatpages.urls")),
     path("mailing/", include("mailing.urls")),
     path("", include("rating_movies.urls")),
-    path("api/v1/auth/", include("djoser.urls")),
     re_path(r"^auth/", include("djoser.urls.authtoken")),
     path("api/v1/", include("api.urls")),
 )
