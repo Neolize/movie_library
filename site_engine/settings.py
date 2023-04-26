@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.vk",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -333,5 +334,17 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
     )
+}
+
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': False,
+    'SERIALIZERS': {},
 }
