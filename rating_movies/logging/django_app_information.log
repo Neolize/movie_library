@@ -117,3 +117,10 @@
   "lineno": 42,
   "message": "Passed parameter '('pk',)' is unavailable"
 }
+{
+  "levelname": "ERROR",
+  "asctime": "2023-04-26 12:44:14,643",
+  "filename": "decorators.py",
+  "lineno": 16,
+  "message": "'Movie' object has no attribute 'annotate'"
+}

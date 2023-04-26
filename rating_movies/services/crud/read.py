@@ -6,10 +6,11 @@ from django import forms
 from django.core.cache import cache
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.models import User
-from django.db.models import F, QuerySet, Prefetch, ObjectDoesNotExist
+from django.db.models import F, QuerySet, Prefetch, ObjectDoesNotExist, Sum, Count, Q
 
 from rating_movies import models
 from rating_movies.services.crud import repositories, specifications
+from rating_movies.services.crud.decorators import base_movie_filter
 from rating_movies.services.utils import get_client_ip, convert_years_for_random_movies,\
     convert_country_for_random_movies
 
@@ -336,6 +337,26 @@ def is_movie_in_user_watchlist(movie: models.Movie, user: User) -> bool:
     return is_movie
 
 
-def get_all_reviews() -> QuerySet[models.Review]:
-    repository = repositories.ReviewRepository()
-    return repository.get_all_objects()
+def get_movie_by_pk_annotated_by_rating(pk: int) -> Optional[QuerySet[models.Movie]]:
+    try:
+        movie = models.Movie.objects.filter(pk=pk).annotate(
+            average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
+        )
+    except ObjectDoesNotExist as exc:
+        # LOGGER.error(exc)
+        print(exc)
+        movie = None
+
+    return movie
+
+
+@base_movie_filter
+def get_all_movies_annotated_by_rating(request) -> QuerySet[models.Movie]:
+    """Return all active movies annotated by average rating of the current movie
+     and user rating (is current user set a rating for this movie), ordered by 'id'"""
+    movies = models.Movie.objects.order_by("id").annotate(
+        user_rating=Count("rating", filter=Q(rating__ip=get_client_ip(request)))
+    ).annotate(
+        average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
+    )
+    return movies
