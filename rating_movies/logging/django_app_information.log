@@ -124,3 +124,24 @@
   "lineno": 16,
   "message": "'Movie' object has no attribute 'annotate'"
 }
+{
+  "levelname": "ERROR",
+  "asctime": "2023-04-27 13:06:22,452",
+  "filename": "crud_utils.py",
+  "lineno": 73,
+  "message": "maximum recursion depth exceeded while calling a Python object"
+}
+{
+  "levelname": "ERROR",
+  "asctime": "2023-04-27 13:08:23,072",
+  "filename": "crud_utils.py",
+  "lineno": 73,
+  "message": "maximum recursion depth exceeded while calling a Python object"
+}
+{
+  "levelname": "ERROR",
+  "asctime": "2023-04-27 13:09:45,898",
+  "filename": "crud_utils.py",
+  "lineno": 73,
+  "message": "maximum recursion depth exceeded while calling a Python object"
+}
