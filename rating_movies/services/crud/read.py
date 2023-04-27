@@ -338,13 +338,13 @@ def is_movie_in_user_watchlist(movie: models.Movie, user: User) -> bool:
 
 
 def get_movie_by_pk_annotated_by_rating(pk: int) -> Optional[QuerySet[models.Movie]]:
+    """Return movie using 'pk' that annotated by average rating and ordered by 'id'"""
     try:
         movie = models.Movie.objects.filter(pk=pk).annotate(
             average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
         )
     except ObjectDoesNotExist as exc:
-        # LOGGER.error(exc)
-        print(exc)
+        LOGGER.error(exc)
         movie = None
 
     return movie
@@ -352,8 +352,8 @@ def get_movie_by_pk_annotated_by_rating(pk: int) -> Optional[QuerySet[models.Mov
 
 @base_movie_filter
 def get_all_movies_annotated_by_rating(request) -> QuerySet[models.Movie]:
-    """Return all active movies annotated by average rating of the current movie
-     and user rating (is current user set a rating for this movie), ordered by 'id'"""
+    """Return all active movies annotated by average rating
+    and user rating (is current user set a rating for this movie), ordered by 'id'"""
     movies = models.Movie.objects.order_by("id").annotate(
         user_rating=Count("rating", filter=Q(rating__ip=get_client_ip(request)))
     ).annotate(
