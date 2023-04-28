@@ -168,6 +168,16 @@ class RatingRepository(BaseObject):
             LOGGER.error(exc)
             return False
 
+    def get_rating_set(self, ip: str, movie: str) -> Optional[QuerySet[Rating]]:
+        """Return rating QuerySet by given 'ip' and 'movie' params or None if an exception was raised"""
+        try:
+            rating_set = self.model.objects.filter(ip=ip, movie_id=movie)
+        except Exception as exc:
+            LOGGER.error(exc)
+            rating_set = None
+
+        return rating_set
+
     @staticmethod
     def fetch_average_movie_rating(movie_id: int) -> Optional[float]:
         """Возвращает средний рейтинг переданного фильма"""
@@ -207,3 +217,13 @@ class OtherSourcesRatingRepository(BaseObject):
 
 class ReviewRepository(BaseObject):
     model = Review
+
+    def get_review_set_by_pk(self, pk: str) -> Optional[QuerySet[Review]]:
+        """Return review QuerySet by given 'pk' or None if an exception was raised"""
+        try:
+            review_set = self.model.objects.filter(pk=pk)
+        except Exception as exc:
+            LOGGER.error(exc)
+            review_set = None
+
+        return review_set

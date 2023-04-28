@@ -360,3 +360,23 @@ def get_all_movies_annotated_by_rating(request) -> QuerySet[models.Movie]:
         average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
     )
     return movies
+
+
+def get_review_set_by_parameters(**kwargs) -> Optional[QuerySet[models.Review]]:
+    """Return review QuerySet using given parameters or None if parameters weren't received"""
+    repository = repositories.ReviewRepository()
+    pk = kwargs.get("pk", None)
+    if not pk:
+        return None
+    queryset = repository.get_review_set_by_pk(pk=kwargs.get("pk"))
+    return queryset
+
+
+def get_rating_set_by_parameters(**kwargs) -> Optional[QuerySet[models.Rating]]:
+    """Return rating QuerySet using given parameters or None if parameters weren't received"""
+    repository = repositories.RatingRepository()
+    ip, movie = kwargs.get("ip", None), kwargs.get("movie", None)
+    if not bool(ip and movie):
+        return None
+    queryset = repository.get_rating_set(ip=ip, movie=movie)
+    return queryset
