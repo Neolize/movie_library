@@ -11,6 +11,7 @@ class GenresInFilter(rest_framework.BaseInFilter, rest_framework.CharFilter):
 
 class PermissionMixin:
     def check_user_permissions(self, request):
+        """Check user's permissions for different actions"""
         authenticated_user_actions = ("list", "retrieve")
         admin_actions = ("create", "update", "partial_update", "destroy")
 
@@ -22,6 +23,7 @@ class PermissionMixin:
 
 
 class MovieFilter(rest_framework.FilterSet):
+    """Filtering movies by years and genres"""
     genres = GenresInFilter(field_name="genres__name", lookup_expr="in")
     year = rest_framework.RangeFilter()
 
@@ -31,6 +33,8 @@ class MovieFilter(rest_framework.FilterSet):
 
 
 def update_movie_other_sources_rating_api(pk: int, data: dict = None) -> None:
+    """Update OtherSourcesRating instance using gotten params: pk and data.
+    If data wasn't given then get movie by pk and add needed information"""
     if data is None or not ("title" in data and "world_premiere" in data):
         movie = read.get_movie_by_parameters(pk=pk)
         data = {"title": movie.title, "world_premiere": movie.world_premiere}

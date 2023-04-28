@@ -87,6 +87,7 @@ class Actor(models.Model):
         return reverse("delete_actor_director", kwargs={"slug": self.url})
 
     def update_age(self):
+        """Add or update actor/director age by subtracting birth_date from death_date or today's date"""
         if self.death_date:
             time_delta = self.death_date - self.birth_date
         else:

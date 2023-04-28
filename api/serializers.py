@@ -30,6 +30,7 @@ class ActorDetailSerializer(serializers.ModelSerializer):
 
 
 class ReviewDetailSerializer(serializers.ModelSerializer):
+    """Review serializer for MovieDetailSerializer"""
     review_parent = RecursiveReviewSerializer(many=True)
 
     class Meta:
