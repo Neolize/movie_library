@@ -35,7 +35,7 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
     class Meta:
         list_serializer_class = FilterReviewListSerializer
         model = models.Review
-        fields = ("name", "text", "added", "review_parent")
+        fields = ("id", "name", "email", "text", "added", "review_parent")
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
@@ -44,12 +44,16 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# class RatingDetailSerializer(serializers.ModelSerializer):
-#     star = serializers.SlugRelatedField(slug_field="value", read_only=True)
-#
-#     class Meta:
-#         model = models.Rating
-#         fields = ("star", )
+class ReviewUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Review
+        fields = "__all__"
+
+
+class ReviewDestroySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Review
+        fields = ("pk", )
 
 
 class MovieListSerializer(serializers.ModelSerializer):
@@ -68,7 +72,6 @@ class MovieDetailSerializer(serializers.ModelSerializer):
     directors = ActorListSerializer(many=True, read_only=True)
     genres = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
     category = serializers.SlugRelatedField(slug_field="name", read_only=True)
-    # rating_set = RatingDetailSerializer(many=True, read_only=True)
     average_rating = serializers.IntegerField()
     review_set = ReviewDetailSerializer(many=True, read_only=True)
     movie_rating = serializers.SlugRelatedField(slug_field="rating", read_only=True, many=True)
@@ -80,15 +83,63 @@ class MovieDetailSerializer(serializers.ModelSerializer):
                   "genres", "category", "average_rating", "movie_rating", "review_set")
 
 
-class CreateRatingSerializer(serializers.ModelSerializer):
+class RatingUpdateOrCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rating
         fields = ("star", "movie")
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict):
         rating, _ = models.Rating.objects.update_or_create(
             ip=validated_data.get("ip", None),
             movie=validated_data.get("movie", None),
             defaults={"star": validated_data.get("star", None)}
         )
         return rating
+
+
+class RatingDestroySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Rating
+        fields = ("ip", "movie")
+
+
+class MovieListForGenreSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(slug_field="name", read_only=True)
+
+    class Meta:
+        model = models.Movie
+        fields = ("id", "title", "category")
+
+
+class GenreListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Genre
+        fields = ("id", "name", "description", "url")
+
+
+class GenreDetailSerializer(serializers.ModelSerializer):
+    movie_genre = MovieListForGenreSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = models.Genre
+        fields = ("id", "name", "description", "url", "movie_genre")
+
+
+class MovieListForCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Movie
+        fields = ("id", "title", "url")
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Category
+        fields = ("id", "name", "description", "url")
+
+
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    movie_category = MovieListForCategorySerializer(read_only=True, many=True)
+
+    class Meta:
+        model = models.Category
+        fields = ("id", "name", "description", "url", "movie_category")

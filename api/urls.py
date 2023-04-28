@@ -7,6 +7,7 @@ from api import views
 
 router = DefaultRouter()
 router.register(r"actor", views.ActorAPIViewSet)
+router.register(r"genre", views.GenreAPIViewSet)
 
 
 urlpatterns = [
@@ -19,11 +20,11 @@ urlpatterns = [
     path("", include(router.urls)),
     path("movie_list/", views.MovieAPIViewSet.as_view({"get": "list"})),
     path("movie/<int:pk>/", views.MovieAPIViewSet.as_view({"get": "retrieve"})),
-    path("genre_list/", views.GenreAPIViewSet.as_view({"get": "list"})),
-    path("genre/<int:pk>/", views.GenreAPIViewSet.as_view({"get": "retrieve"})),
     path("category_list/", views.CategoryAPIViewSet.as_view({"get": "list"})),
     path("category/<int:pk>/", views.CategoryAPIViewSet.as_view({"get": "retrieve"})),
-
-    path("add/rating/", views.RatingAPICreateOrUpdateView.as_view()),
-    path("add/review/", views.ReviewAPICreateView.as_view()),
+    path("create/review/", views.ReviewAPICreateView.as_view()),
+    path("update/review/<int:pk>/", views.ReviewAPIUpdateView.as_view()),
+    path("update_or_create/rating/", views.RatingAPIUpdateOrCreateView.as_view()),
+    path("destroy/rating/<int:movie_id>/", views.RatingAPIDestroyView.as_view()),
+    path("destroy/review/<int:pk>/", views.ReviewAPIDestroyView.as_view()),
 ]
