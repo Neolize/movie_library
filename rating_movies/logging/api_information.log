@@ -1,0 +1,21 @@
+{
+  "levelname": "INFO",
+  "asctime": "2022-11-24 09:33:54,859",
+  "filename": "weather_api.py",
+  "lineno": 54,
+  "message": "Test weather api"
+}
+{
+  "levelname": "ERROR",
+  "asctime": "2022-11-24 09:34:55,495",
+  "filename": "weather_api.py",
+  "lineno": 98,
+  "message": "'NoneType' object is not subscriptable"
+}
+{
+  "levelname": "ERROR",
+  "asctime": "2022-11-24 09:34:55,495",
+  "filename": "weather_api.py",
+  "lineno": 124,
+  "message": "'NoneType' object is not subscriptable"
+}

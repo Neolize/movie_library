@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from site_engine import settings
+from site_engine.yasg import urlpatterns as yasg_urlpatterns
 from rating_movies.views import show_page_not_found
 
 
@@ -32,7 +33,10 @@ urlpatterns += i18n_patterns(
     path("pages/", include("django.contrib.flatpages.urls")),
     path("mailing/", include("mailing.urls")),
     path("", include("rating_movies.urls")),
+    path("api/v1/", include("api.urls")),
 )
+
+urlpatterns += yasg_urlpatterns
 
 if settings.DEBUG:
     import debug_toolbar

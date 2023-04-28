@@ -70,6 +70,7 @@ class Actor(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        self.update_age()
         if not self.pk:
             self.url = slugify(str(self.name))
             if not is_unique_url(model=Actor, url=self.url):
@@ -84,6 +85,14 @@ class Actor(models.Model):
 
     def get_delete_url(self):
         return reverse("delete_actor_director", kwargs={"slug": self.url})
+
+    def update_age(self):
+        if self.death_date:
+            time_delta = self.death_date - self.birth_date
+        else:
+            time_delta = date.today() - self.birth_date
+
+        self.age = int(time_delta.days / 365)
 
 
 class Genre(models.Model):

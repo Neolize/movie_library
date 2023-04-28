@@ -60,10 +60,19 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "rating_movies.apps.RatingMoviesConfig",
     "mailing.apps.MailingConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.vk",
+    "django_filters",
+    "drf_yasg",
+    "oauth2_provider",
+    "social_django",
+    "rest_framework_social_oauth2",
 ]
 
 MIDDLEWARE = [
@@ -157,10 +166,13 @@ DATABASES = {
     }
 }
 
-AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
-]
+    "social_core.backends.vk.VKOAuth2",
+    "rest_framework_social_oauth2.backends.DjangoOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 
 # Password validation
@@ -318,3 +330,33 @@ CACHES = {
         "LOCATION": BASE_DIR / "rating_movies" / "rating_movies_cache",
     }
 }
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "rest_framework_social_oauth2.authentication.SocialAuthentication",
+    ),
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+    )
+}
+
+
+DJOSER = {
+    "PASSWORD_RESET_CONFIRM_URL": "#/password/reset/confirm/{uid}/{token}",
+    "USERNAME_RESET_CONFIRM_URL": "#/username/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "#/activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": False,
+    "SERIALIZERS": {},
+}
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = environ["SOCIAL_AUTH_VK_OAUTH2_KEY"]
+SOCIAL_AUTH_VK_OAUTH2_SECRET = environ["SOCIAL_AUTH_VK_OAUTH2_SECRET"]

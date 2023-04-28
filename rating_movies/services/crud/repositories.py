@@ -5,7 +5,8 @@ import psycopg2
 from django.db.models import Q, QuerySet, Count
 
 from site_engine.settings import environ
-from rating_movies.models import Category, Actor, Genre, Movie, MovieShots, RatingStar, Rating, OtherSourcesRating
+from rating_movies.models import Category, Actor, Genre, Movie, MovieShots,\
+    RatingStar, Rating, OtherSourcesRating, Review
 from rating_movies.services.crud import specifications
 from rating_movies.services.crud.crud_utils import BaseObject
 from rating_movies.services.crud.decorators import base_movie_filter, base_movie_ordering, base_actor_director_ordering
@@ -167,6 +168,16 @@ class RatingRepository(BaseObject):
             LOGGER.error(exc)
             return False
 
+    def get_rating_set(self, ip: str, movie: str) -> Optional[QuerySet[Rating]]:
+        """Return rating QuerySet by given 'ip' and 'movie' params or None if an exception was raised"""
+        try:
+            rating_set = self.model.objects.filter(ip=ip, movie_id=movie)
+        except Exception as exc:
+            LOGGER.error(exc)
+            rating_set = None
+
+        return rating_set
+
     @staticmethod
     def fetch_average_movie_rating(movie_id: int) -> Optional[float]:
         """Возвращает средний рейтинг переданного фильма"""
@@ -202,3 +213,17 @@ class RatingRepository(BaseObject):
 
 class OtherSourcesRatingRepository(BaseObject):
     model = OtherSourcesRating
+
+
+class ReviewRepository(BaseObject):
+    model = Review
+
+    def get_review_set_by_pk(self, pk: str) -> Optional[QuerySet[Review]]:
+        """Return review QuerySet by given 'pk' or None if an exception was raised"""
+        try:
+            review_set = self.model.objects.filter(pk=pk)
+        except Exception as exc:
+            LOGGER.error(exc)
+            review_set = None
+
+        return review_set

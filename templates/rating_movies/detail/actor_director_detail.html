@@ -16,7 +16,11 @@
     <div class="left-ads-display col-lg-8">
         <div class="row">
             <div class="desc1-left col-md-6">
-                <img src="{{ actor_director.image.url }}" class="img-fluid" alt="{{ actor_director.name }}">
+                {% if actor_director.image %}
+                    <img src="{{ actor_director.image.url }}" class="img-fluid" alt="{{ actor_director.name }}">
+                {% else %}
+                    <img src="" class="img-fluid" alt="{{ actor_director.name }}">
+                {% endif %}
             </div>
             <div class="desc1-right col-md-6 pl-lg-4">
                 <h3 class="editContent" style="outline: none; cursor: inherit;">

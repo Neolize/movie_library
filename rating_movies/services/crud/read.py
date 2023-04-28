@@ -6,10 +6,11 @@ from django import forms
 from django.core.cache import cache
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.models import User
-from django.db.models import F, QuerySet, Prefetch, ObjectDoesNotExist
+from django.db.models import F, QuerySet, Prefetch, ObjectDoesNotExist, Sum, Count, Q
 
 from rating_movies import models
 from rating_movies.services.crud import repositories, specifications
+from rating_movies.services.crud.decorators import base_movie_filter
 from rating_movies.services.utils import get_client_ip, convert_years_for_random_movies,\
     convert_country_for_random_movies
 
@@ -334,3 +335,48 @@ def is_movie_in_user_watchlist(movie: models.Movie, user: User) -> bool:
         is_movie = is_movie_in_user_watchlist(movie, user)
 
     return is_movie
+
+
+def get_movie_by_pk_annotated_by_rating(pk: int) -> Optional[QuerySet[models.Movie]]:
+    """Return movie using 'pk' that annotated by average rating and ordered by 'id'"""
+    try:
+        movie = models.Movie.objects.filter(pk=pk).annotate(
+            average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
+        )
+    except ObjectDoesNotExist as exc:
+        LOGGER.error(exc)
+        movie = None
+
+    return movie
+
+
+@base_movie_filter
+def get_all_movies_annotated_by_rating(request) -> QuerySet[models.Movie]:
+    """Return all active movies annotated by average rating
+    and user rating (is current user set a rating for this movie), ordered by 'id'"""
+    movies = models.Movie.objects.order_by("id").annotate(
+        user_rating=Count("rating", filter=Q(rating__ip=get_client_ip(request)))
+    ).annotate(
+        average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
+    )
+    return movies
+
+
+def get_review_set_by_parameters(**kwargs) -> Optional[QuerySet[models.Review]]:
+    """Return review QuerySet using given parameters or None if parameters weren't received"""
+    repository = repositories.ReviewRepository()
+    pk = kwargs.get("pk", None)
+    if not pk:
+        return None
+    queryset = repository.get_review_set_by_pk(pk=kwargs.get("pk"))
+    return queryset
+
+
+def get_rating_set_by_parameters(**kwargs) -> Optional[QuerySet[models.Rating]]:
+    """Return rating QuerySet using given parameters or None if parameters weren't received"""
+    repository = repositories.RatingRepository()
+    ip, movie = kwargs.get("ip", None), kwargs.get("movie", None)
+    if not bool(ip and movie):
+        return None
+    queryset = repository.get_rating_set(ip=ip, movie=movie)
+    return queryset

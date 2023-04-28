@@ -15,7 +15,7 @@ def update_movie(form: MovieForm) -> bool:
     if movie_validator.can_be_saved():
         is_updated: bool = repository.update_obj(obj=form)
         if is_updated:
-            update_other_sources_rating(movie_cleaned_data=form.cleaned_data)
+            update_movie_other_sources_rating(movie_cleaned_data=form.cleaned_data)
             return True
     return False
 
@@ -30,7 +30,7 @@ def update_actor_director(form: ActorDirectorForm) -> bool:
     return False
 
 
-def update_other_sources_rating(movie_cleaned_data: dict) -> None:
+def update_movie_other_sources_rating(movie_cleaned_data: dict) -> None:
     """Other sources rating update"""
     title = movie_cleaned_data.get("title", "")
     world_premiere = movie_cleaned_data.get("world_premiere", datetime.date.today())

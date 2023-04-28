@@ -45,7 +45,7 @@ class ObjectByParameterSpecification(Specification):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__available_params = ("pk", "url", "title", "world_premiere", "movie")
+        self.__available_params = ("pk", "id", "url", "title", "world_premiere", "movie")
 
     def is_satisfied(self, available_params=()):
         return super().is_satisfied(available_params=self.__available_params)

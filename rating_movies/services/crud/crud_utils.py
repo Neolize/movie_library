@@ -49,10 +49,11 @@ class BaseObject:
     def create_new_object(self, obj: dict) -> Union[bool, model]:
         try:
             new_obj = self.model.objects.create(**obj)
-            return new_obj
         except Exception as exc:
             LOGGER.error(exc)
-            return False
+            new_obj = False
+
+        return new_obj
 
     @staticmethod
     def delete_obj(obj) -> bool:
