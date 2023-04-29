@@ -10,7 +10,6 @@ from rating_movies.services.utils import get_client_ip
 
 class ActorAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
     queryset = read.get_all_actors_directors_ordered_by_parameter("id")
-    permission_classes = (permissions.IsAuthenticated, )
     pagination_class = paginations.BasePagination
 
     def get_serializer_class(self):
@@ -20,13 +19,14 @@ class ActorAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
             return serializers.ActorDetailSerializer
 
     def check_permissions(self, request: Request):
-        self.check_user_permissions(request)
+        self.check_user_permissions()
 
 
 class MovieAPIViewSet(viewsets.ReadOnlyModelViewSet, api_services.PermissionMixin):
     filter_backends = (DjangoFilterBackend, )
     filterset_class = api_services.MovieFilter
     pagination_class = paginations.MovieAPIListPagination
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -41,13 +41,9 @@ class MovieAPIViewSet(viewsets.ReadOnlyModelViewSet, api_services.PermissionMixi
             api_services.update_movie_other_sources_rating_api(pk=self.kwargs.get("pk"))
             return read.get_movie_by_pk_annotated_by_rating(self.kwargs.get("pk"))
 
-    def check_permissions(self, request: Request):
-        self.check_user_permissions(request)
-
 
 class GenreAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
     queryset = read.get_all_genres_ordered_by_parameter("id")
-    permission_classes = (permissions.IsAuthenticated, )
     pagination_class = paginations.BasePagination
 
     def get_serializer_class(self):
@@ -57,7 +53,7 @@ class GenreAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
             return serializers.GenreDetailSerializer
 
     def check_permissions(self, request: Request):
-        self.check_user_permissions(request)
+        self.check_user_permissions()
 
 
 class CategoryAPIViewSet(viewsets.ReadOnlyModelViewSet):
