@@ -106,7 +106,7 @@ def _assign_color(rating_number: float) -> str:
     return color
 
 
-def add_class_color_to_movie_rating(movie_rating: dict) -> Optional[dict]:
+def add_class_color_to_movie_rating(movie_rating: Optional[dict]) -> Optional[dict]:
     """Add items for identifying rating color"""
     if movie_rating is None:
         return movie_rating
