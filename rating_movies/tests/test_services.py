@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date
 
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -149,4 +149,3 @@ class TestAPICase(TestCase):
     def test_movies_api(self):
         results = movies_api.get_movie_rating("Inception")
         self.assertNotEqual(None, results)
-

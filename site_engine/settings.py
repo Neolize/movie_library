@@ -54,13 +54,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
+
     "ckeditor",
     "ckeditor_uploader",
     "snowpenguin.django.recaptcha3",
     "debug_toolbar",
-    "rating_movies.apps.RatingMoviesConfig",
-    "mailing.apps.MailingConfig",
-    "api.apps.ApiConfig",
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
@@ -73,6 +71,10 @@ INSTALLED_APPS = [
     "oauth2_provider",
     "social_django",
     "rest_framework_social_oauth2",
+
+    "rating_movies.apps.RatingMoviesConfig",
+    "mailing.apps.MailingConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [

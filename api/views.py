@@ -1,6 +1,7 @@
 from django.http import Http404
 from rest_framework import generics, permissions, viewsets
 from rest_framework.request import Request
+from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from api import serializers, paginations, services as api_services
@@ -10,7 +11,11 @@ from rating_movies.services.utils import get_client_ip
 
 class ActorAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
     queryset = read.get_all_actors_directors_ordered_by_parameter("id")
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     pagination_class = paginations.BasePagination
+    filterset_fields = ["name"]
+    search_fields = ["id", "age"]
+    ordering_fields = ["id", "name"]
 
     def get_serializer_class(self):
         if self.action == "list":
