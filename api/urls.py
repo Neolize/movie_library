@@ -24,7 +24,7 @@ urlpatterns = [
     path("category/<int:pk>/", views.CategoryAPIViewSet.as_view({"get": "retrieve"})),
     path("create/review/", views.ReviewAPICreateView.as_view()),
     path("update/review/<int:pk>/", views.ReviewAPIUpdateView.as_view()),
-    path("update_or_create/rating/", views.RatingAPIUpdateOrCreateView.as_view()),
-    path("destroy/rating/<int:movie_id>/", views.RatingAPIDestroyView.as_view()),
+    path("update_or_create/rating/", views.RatingAPIUpdateOrCreateView.as_view(), name="update_or_create_rating"),
+    path("destroy/rating/<int:movie_id>/", views.RatingAPIDestroyView.as_view(), name="destroy_rating"),
     path("destroy/review/<int:pk>/", views.ReviewAPIDestroyView.as_view()),
 ]

@@ -13,6 +13,7 @@ class ActorAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
     queryset = read.get_all_actors_directors_ordered_by_parameter("id")
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     pagination_class = paginations.BasePagination
+    permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["name"]
     search_fields = ["id", "age"]
     ordering_fields = ["id", "name"]
@@ -50,6 +51,7 @@ class MovieAPIViewSet(viewsets.ReadOnlyModelViewSet, api_services.PermissionMixi
 class GenreAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
     queryset = read.get_all_genres_ordered_by_parameter("id")
     pagination_class = paginations.BasePagination
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == "list":

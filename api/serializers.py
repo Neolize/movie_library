@@ -31,12 +31,12 @@ class ActorDetailSerializer(serializers.ModelSerializer):
 
 class ReviewDetailSerializer(serializers.ModelSerializer):
     """Review serializer for MovieDetailSerializer"""
-    review_parent = RecursiveReviewSerializer(many=True)
+    children_reviews = RecursiveReviewSerializer(many=True, source="review_parent")
 
     class Meta:
         list_serializer_class = FilterReviewListSerializer
         model = models.Review
-        fields = ("id", "name", "email", "text", "added", "review_parent")
+        fields = ("id", "name", "email", "text", "added", "children_reviews")
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):

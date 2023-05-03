@@ -146,3 +146,65 @@ class GenreAPITestCase(APITestCase):
 
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
         self.assertEqual(2, genres_number)
+
+
+class RatingAPITestCase(APITestCase):
+    def setUp(self):
+        self.superuser = User.objects.create_superuser("superuser")
+        self.user = User.objects.create_user("user")
+
+        self.first_rating_star = models.RatingStar.objects.create(value=3)
+        self.second_rating_star = models.RatingStar.objects.create(value=5)
+
+        self.first_movie = models.Movie.objects.create(title="First movie")
+        self.second_movie = models.Movie.objects.create(title="Second movie")
+
+        self.first_rating = models.Rating.objects.create(
+            ip="127.0.0.1",
+            star=self.first_rating_star,
+            movie=self.first_movie,
+        )
+        self.second_rating = models.Rating.objects.create(
+            ip="127.0.0.1",
+            star=self.second_rating_star,
+            movie=self.second_movie,
+        )
+
+    def test_not_update_rating(self):
+        url = reverse("update_or_create_rating")
+        data = {"star": 1, "movie": 1}
+        unauthorized_response = self.client.get(url)
+        self.assertEqual(status.HTTP_401_UNAUTHORIZED, unauthorized_response.status_code)
+
+        self.client.force_login(user=self.user)
+        forbidden_response = self.client.put(url, data=data)
+        self.assertEqual(status.HTTP_403_FORBIDDEN, forbidden_response.status_code)
+
+        self.client.force_login(user=self.superuser)
+        not_allowed_response = self.client.put(url, data=data)
+        self.assertEqual(status.HTTP_405_METHOD_NOT_ALLOWED, not_allowed_response.status_code)
+
+        response = self.client.post(url, data=data)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+
+    def test_update_or_create_rating(self):
+        url = reverse("update_or_create_rating")
+        data = {"star": self.second_rating_star.id, "movie": self.first_movie.id}
+
+        self.client.force_login(user=self.superuser)
+        response = self.client.post(url, data=data)
+
+        self.first_rating.refresh_from_db()
+        serializer_data = serializers.RatingUpdateOrCreateSerializer(self.first_rating).data
+
+        self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+        self.assertEqual(serializer_data, response.data)
+
+    def test_delete_rating(self):
+        url = reverse("destroy_rating", args=(self.second_movie.id, ))
+        self.client.force_login(user=self.superuser)
+        response = self.client.delete(url)
+        ratings_number = models.Rating.objects.all().count()
+
+        self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
+        self.assertEqual(1, ratings_number)
