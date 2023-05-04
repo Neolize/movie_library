@@ -71,6 +71,14 @@ def get_actor_director_by_parameters(**kwargs) -> models.Actor:
     )
 
 
+def get_genre_by_parameters(**kwargs) -> models.Genre:
+    """Return Genre instance by given parameters"""
+    repository = repositories.GenreRepository()
+    return repository.get_object_by_parameter(
+        specification=specifications.ObjectByParameterSpecification(**kwargs)
+    )
+
+
 def get_related_objects_to_category(category_url: str) -> QuerySet[models.Movie]:
     """Получает url категории и возвращает связанные с этим url'ом фильмы"""
     return models.Movie.objects.filter(category__url=category_url, draft=False)
@@ -337,17 +345,18 @@ def is_movie_in_user_watchlist(movie: models.Movie, user: User) -> bool:
     return is_movie
 
 
-def get_movie_by_pk_annotated_by_rating(pk: int) -> Optional[QuerySet[models.Movie]]:
-    """Return movie using 'pk' that annotated by average rating and ordered by 'id'"""
-    try:
-        movie = models.Movie.objects.filter(pk=pk).annotate(
-            average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
+def get_movie_set_by_pk_annotated_by_rating(pk: int) -> QuerySet[models.Movie]:
+    """Return movie using 'pk' which annotated by average rating and related reviews with parent field"""
+    movies = models.Movie.objects.filter(pk=pk).annotate(
+        average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
+    ).prefetch_related(
+        Prefetch(
+            "review_set",
+            models.Review.objects.filter(movie_id=pk).select_related("parent"),
+            "reviews",
         )
-    except ObjectDoesNotExist as exc:
-        LOGGER.error(exc)
-        movie = None
-
-    return movie
+    )
+    return movies
 
 
 @base_movie_filter
@@ -358,7 +367,7 @@ def get_all_movies_annotated_by_rating(request) -> QuerySet[models.Movie]:
         user_rating=Count("rating", filter=Q(rating__ip=get_client_ip(request)))
     ).annotate(
         average_rating=Sum(F("rating__star__value")) / Count(F("rating"))
-    )
+    ).select_related("category")
     return movies
 
 
@@ -380,3 +389,16 @@ def get_rating_set_by_parameters(**kwargs) -> Optional[QuerySet[models.Rating]]:
         return None
     queryset = repository.get_rating_set(ip=ip, movie=movie)
     return queryset
+
+
+def get_genre_set_with_related_movies(genre: models.Genre) -> QuerySet[models.Movie]:
+    """Get a Genre instance and return genre QuerySet with related movies (only 'pk' and 'title' fields)
+     where draft is equal False"""
+    genre_set = models.Genre.objects.filter(pk=genre.pk).prefetch_related(
+        Prefetch(
+            "movie_genre",
+            models.Movie.objects.filter(genres__pk=genre.pk, draft=False).only("pk", "title"),
+            "movies",
+        )
+    )
+    return genre_set

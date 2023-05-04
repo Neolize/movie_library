@@ -45,7 +45,7 @@ class MovieAPIViewSet(viewsets.ReadOnlyModelViewSet, api_services.PermissionMixi
             return read.get_all_movies_annotated_by_rating(request=self.request)
         elif self.action == "retrieve":
             api_services.update_movie_other_sources_rating_api(pk=self.kwargs.get("pk"))
-            return read.get_movie_by_pk_annotated_by_rating(self.kwargs.get("pk"))
+            return read.get_movie_set_by_pk_annotated_by_rating(self.kwargs.get("pk"))
 
 
 class GenreAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
@@ -58,6 +58,13 @@ class GenreAPIViewSet(viewsets.ModelViewSet, api_services.PermissionMixin):
             return serializers.GenreListSerializer
         else:
             return serializers.GenreDetailSerializer
+
+    def get_queryset(self):
+        if self.action == "retrieve":
+            genre = read.get_genre_by_parameters(pk=self.kwargs.get("pk"))
+            self.queryset = read.get_genre_set_with_related_movies(genre)
+
+        return self.queryset
 
     def check_permissions(self, request: Request):
         self.check_user_permissions()
