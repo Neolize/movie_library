@@ -3,6 +3,8 @@ from datetime import date
 
 from django.urls import reverse
 from rest_framework import status
+from django.db import connection
+from django.test.utils import CaptureQueriesContext
 from rest_framework.test import APITestCase, APIRequestFactory, force_authenticate
 from django.contrib.auth.models import User
 
@@ -79,9 +81,12 @@ class GenreAPITestCase(APITestCase):
 
     def test_genre_detail(self):
         url = reverse("genre-detail", kwargs={"pk": self.third_genre.pk})
-        response = self.client.get(url)
+        with CaptureQueriesContext(connection) as queries:
+            response = self.client.get(url)
+            self.assertEqual(3, len(queries))
 
         response_data = response.data
+        response_data.pop("movies")
         serializer_data = serializers.GenreDetailSerializer(self.third_genre).data
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
@@ -114,7 +119,6 @@ class GenreAPITestCase(APITestCase):
         request = self.factory.post(url, data=new_genre, format="json")
         force_authenticate(request, user=self.superuser)
         response = view(request)
-        response.data.pop("movie_genre")
         genres_number = models.Genre.objects.all().count()
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
